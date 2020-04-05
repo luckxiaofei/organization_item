@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fei.db.dao.SysAdminMapper">
+    <resultMap id="BaseResultMap" type="com.fei.db.entity.po.SysAdmin">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp"/>
+        <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+
+    <resultMap id="MapVo" type="com.fei.db.entity.vo.SysAdminVO" extends="BaseResultMap"></resultMap>
+
+    <select id="listSysAdminVOByName" resultMap="MapVo">
+      select id, user_name, password, last_login_ip, last_login_time, avatar, add_time, update_time, deleted
+      from sys_admin
+      where user_name=#{name}
+    </select>
+</mapper>

@@ -1,0 +1,52 @@
+<view class="container">
+
+  <view class='login'>
+    <view class="no-cart" wx:if="{{cartGoods.length <= 0}}">
+      <view class="c">
+        <image src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/noCart-a8fe3f12e5.png" />
+        <text>去添加点什么吧</text>
+      </view>
+    </view>
+    <view class="cart-view" wx:else>
+      <view class="list">
+        <view class="group-item">
+          <view class="goods">
+            <view class="item" wx:for="{{cartGoods}}" wx:key="id">
+              <van-swipe-cell right-width="{{ 65 }}" data-goods-id="{{item.goodsId}}" bind:click="deleteCart">
+                <view class="checkbox {{item.checked ? 'checked' : ''}}" bindtap="checkedItem" data-item-index="{{index}}"></view>
+                <view class="cart-goods">
+
+                  <image class="img" src="{{item.picUrl}}"></image>
+                  <view class="info">
+                    <view class="t">
+                      <text class="name">{{item.goodsName}}</text>
+                    </view>
+                    <view class="b">
+                      <text class="price">￥{{item.price}}</text>
+                      <view class="selnum">
+                        <van-stepper value="{{ item.number }}" data-goods-id="{{item.goodsId}}" data-id="{{item.id}}" data-product-id="{{item.productId}}" bind:change="updateCart" />
+                      </view>
+                    </view>
+                  </view>
+                </view>
+                <view slot="right" class="delete">删除</view>
+              </van-swipe-cell>
+            </view>
+          </view>
+        </view>
+
+      </view>
+    </view>
+  </view>
+</view>
+
+<van-submit-bar
+  price="{{ cartTotal.checkedGoodsAmount*100 }}"
+  button-text="提交订单"
+  bind:submit="checkoutOrder"
+>
+  <van-tag type="primary">
+  <van-checkbox checked-color="red" value="{{ checkedAllStatus }}" bind:change="checkedAll">全选</van-checkbox>
+  </van-tag>
+</van-submit-bar>
+

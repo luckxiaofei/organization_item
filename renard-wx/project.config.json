@@ -1,0 +1,380 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"enhance": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"uglifyFileName": true,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"bundle": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.4.0",
+	"appid": "wx11fc0aced309f711",
+	"projectname": "Renard",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 34,
+			"list": [
+				{
+					"id": -1,
+					"name": "首页",
+					"pathName": "pages/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "专题",
+					"pathName": "pages/topic/topic",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "专题详情",
+					"pathName": "pages/topicDetail/topicDetail",
+					"query": "id=314"
+				},
+				{
+					"id": -1,
+					"name": "品牌",
+					"pathName": "pages/brand/brand",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "品牌详情",
+					"pathName": "pages/brandDetail/brandDetail",
+					"query": "id=1001000"
+				},
+				{
+					"id": -1,
+					"name": "人气推荐",
+					"pathName": "pages/hotGoods/hotGoods",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "新品首发",
+					"pathName": "pages/newGoods/newGoods",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "分类",
+					"pathName": "pages/catalog/catalog",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "分类详情",
+					"pathName": "pages/category/category",
+					"query": "id=1008002"
+				},
+				{
+					"id": -1,
+					"name": "查找",
+					"pathName": "pages/search/search",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "商品",
+					"pathName": "pages/goods/goods",
+					"query": "id=1181000"
+				},
+				{
+					"id": -1,
+					"name": "商品评论列表",
+					"pathName": "pages/comment/comment",
+					"query": "valueId=1181000&type=0"
+				},
+				{
+					"id": -1,
+					"name": "购物车",
+					"pathName": "pages/cart/cart",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "下单",
+					"pathName": "pages/shopping/checkout/checkout",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "支付结果",
+					"pathName": "pages/payResult/payResult",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/ucenter/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的订单列表",
+					"pathName": "pages/ucenter/order/order",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的订单详情",
+					"pathName": "pages/ucenter/orderDetail/orderDetail",
+					"query": "id=1"
+				},
+				{
+					"id": 22,
+					"name": "待评价的订单详情",
+					"pathName": "pages/ucenter/orderDetail/orderDetail",
+					"query": "id=1"
+				},
+				{
+					"id": -1,
+					"name": "购买商品评价",
+					"pathName": "pages/commentPost/commentPost",
+					"query": "orderId=2&type=0&valueId=1116011"
+				},
+				{
+					"id": -1,
+					"name": "我的优惠券",
+					"pathName": "pages/ucenter/coupon/coupon",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的收藏",
+					"pathName": "pages/ucenter/collect/collect",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的地址",
+					"pathName": "pages/ucenter/address/address",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的地址添加",
+					"pathName": "pages/ucenter/addressAdd/addressAdd",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "登录",
+					"pathName": "pages/auth/login/login",
+					"query": ""
+				},
+				{
+					"id": 25,
+					"name": "pages/goods/goods",
+					"pathName": "pages/goods/goods",
+					"query": "id= 1110017",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/shopping/checkout/checkout",
+					"pathName": "pages/shopping/checkout/checkout",
+					"query": "cartId=6&addressId=0&couponId=0&grouponRulesId=0",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/userMoney",
+					"pathName": "pages/userMoney",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/userMoney/userMoney",
+					"pathName": "pages/userMoney/userMoney",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/userMoneyRecharge/userMoneyRecharge",
+					"pathName": "pages/userMoneyRecharge/userMoneyRecharge",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/ucenter/index/index",
+					"pathName": "pages/ucenter/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/index/index",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/userFriend/userFriend",
+					"pathName": "pages/userFriend/userFriend",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 33,
+					"name": "pages/goods/goods",
+					"pathName": "pages/goods/goods",
+					"query": "id=1006002",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/ucenter/index/index",
+					"pathName": "pages/ucenter/index/index",
+					"query": "id=1181005",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/userMoney/userMoney",
+					"pathName": "pages/userMoney/userMoney",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/shopping/checkout/checkout",
+					"pathName": "pages/shopping/checkout/checkout",
+					"query": "cartId=0&addressId=0&couponId=0&grouponRulesId=0",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/auth/login/login",
+					"pathName": "pages/auth/login/login",
+					"query": "cartId=0&addressId=0&couponId=0&grouponRulesId=0",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/cart/cart",
+					"pathName": "pages/cart/cart",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/cart/cart",
+					"pathName": "pages/cart/cart",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/userMoney/userMoney",
+					"pathName": "pages/userMoney/userMoney",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/userFriend/userFriend",
+					"pathName": "pages/userFriend/userFriend",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/goods/goods",
+					"pathName": "pages/goods/goods",
+					"query": "id=1181020",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/goods/goods",
+					"pathName": "pages/goods/goods",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/userScore/userScore",
+					"pathName": "pages/userScore/userScore",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/catalog/catalog",
+					"pathName": "pages/catalog/catalog",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 46,
+					"name": "pages/search/search",
+					"pathName": "pages/search/search",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 47,
+					"name": "pages/category/category",
+					"pathName": "pages/category/category",
+					"query": "id= 1005000",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/userScore/userScore",
+					"pathName": "pages/userScore/userScore",
+					"query": "id= 1005000",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/userScore/userScore",
+					"pathName": "pages/userScore/userScore",
+					"scene": null
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,100 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/catalog/catalog",
+    "pages/newGoods/newGoods",
+    "pages/hotGoods/hotGoods",
+    "pages/ucenter/index/index",
+    "pages/ucenter/address/address",
+    "pages/ucenter/addressAdd/addressAdd",
+    "pages/ucenter/order/order",
+    "pages/ucenter/orderDetail/orderDetail",
+    "pages/ucenter/coupon/coupon",
+    "pages/auth/login/login",
+    "pages/payResult/payResult",
+    "pages/commentPost/commentPost",
+    "pages/topic/topic",
+    "pages/topicDetail/topicDetail",
+    "pages/brand/brand",
+    "pages/brandDetail/brandDetail",
+    "pages/search/search",
+    "pages/category/category",
+    "pages/cart/cart",
+    "pages/shopping/checkout/checkout",
+    "pages/goods/goods",
+    "pages/groupon/myGroupon/myGroupon",
+    "pages/groupon/grouponDetail/grouponDetail",
+    "pages/groupon/grouponList/grouponList",
+    "pages/userFriend/userFriend",
+    "pages/userMoney/userMoney",
+    "pages/userMoneyRecharge/userMoneyRecharge",
+    "pages/userScore/userScore",
+    "pages/ad/ad",
+    "pages/userScoreHistory/userScoreHistory"
+  ],
+  "window": {
+    "navigationBarTitleText": "Renard",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#6e6d6b",
+    "selectedColor": "#e64340",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "box-shadow": "0 0 6px 0",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/tabbar/like-f.png",
+        "selectedIconPath": "images/tabbar/like-o.png"
+      },
+      {
+        "pagePath": "pages/userScore/userScore",
+        "iconPath": "images/tabbar/beabs-f.png",
+        "selectedIconPath": "images/tabbar/beabs-o.png"
+      },
+      {
+        "pagePath": "pages/ucenter/index/index",
+        "iconPath": "images/tabbar/user-f.png",
+        "selectedIconPath": "images/tabbar/user-o.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "usingComponents": {
+    "van-field": "miniprogram_npm/@vant/weapp/field/index",
+    "van-row": "@vant/weapp/row/index",
+    "van-col": "@vant/weapp/col/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-radio": "@vant/weapp/radio/index",
+    "van-radio-group": "@vant/weapp/radio-group/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-stepper": "@vant/weapp/stepper/index",
+    "van-card": "@vant/weapp/card/index",
+    "van-checkbox": "@vant/weapp/checkbox/index",
+    "van-checkbox-group": "@vant/weapp/checkbox-group/index",
+    "van-image": "@vant/weapp/image/index",
+    "van-swipe-cell": "@vant/weapp/swipe-cell/index",
+    "van-tab": "@vant/weapp/tab/index",
+    "van-tabs": "@vant/weapp/tabs/index",
+    "van-search": "@vant/weapp/search/index",
+    "van-grid": "@vant/weapp/grid/index",
+    "van-grid-item": "@vant/weapp/grid-item/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-collapse": "@vant/weapp/collapse/index",
+    "van-collapse-item": "@vant/weapp/collapse-item/index",
+    "van-notice-bar": "@vant/weapp/notice-bar/index",
+    "van-count-down": "@vant/weapp/count-down/index"
+  },
+  "debug": true,
+  "sitemapLocation": "sitemap.json"
+}

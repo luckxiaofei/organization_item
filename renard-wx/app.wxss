@@ -1,0 +1,25 @@
+/**app.wxss**/
+@import "/miniprogram_npm/@vant/weapp/common/index.wxss";
+
+.container {
+  box-sizing: border-box;
+  font-family: PingFangSC-Light, helvetica, 'Heiti SC';
+  width: 100%;
+  height: 100%;
+}
+
+view, image, text, navigator {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+view, text {
+  font-family: PingFangSC-Light, helvetica, 'Heiti SC';
+  font-size: 29rpx;
+  /*color: #a78845;*/
+}
+
+.wxParse-img {
+  display: block !important;
+}

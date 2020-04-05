@@ -1,0 +1,24 @@
+<view class="zan-dialog {{ showDialog ? 'zan-dialog--show' : '' }}">
+  <view class="zan-dialog__mask" bindtap="toggleDialog" />
+  <view>
+  
+   <view class="zan-dialog__container">
+   <view>
+    <image src="../images/dui.png" class="show_image"></image>  
+   </view>
+   <view style="font-size:18px;font-weight:bold;font-family:Microsoft YaHei;margin-top:5px">
+     发布成功 
+   </view>
+   <view style="font-size:14px;font-weight:bold;font-family:Microsoft YaHei;margin-top:5px">
+   快分享给好友参与活动吧
+   </view>
+   <view>
+   <button open-type="share" class="show_view_btn" >马上分享</button>
+   </view>
+     
+     
+      <!-- <text>快分享好友参与活动吧</text> -->
+  </view>
+  </view>
+ 
+</view>

@@ -1,0 +1,50 @@
+.top {
+  width: 100%;
+  height: 300rpx;
+}
+
+.scoreCard {
+  height: 260rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+  border-bottom-left-radius: 30rpx;
+  border-bottom-right-radius: 30rpx;
+  border-top-left-radius: 30rpx;
+  border-top-right-radius: 30rpx;
+  background-color: #a78845;
+}
+
+.score-info {
+  display: inline-block;
+  height: 120rpx;
+  width: 345rpx;
+}
+
+.score-share-info {
+  display: inline-block;
+  height: 120rpx;
+  width: 345rpx;
+}
+
+.number {
+  margin-top: 80rpx;
+  font-size: 30rpx;
+  font-weight: bolder;
+  text-align: center;
+  color: white;
+}
+
+.comment {
+  font-size: 20rpx;
+  text-align: center;
+  color: rgb(47, 45, 48);
+}
+
+.image {
+
+  margin-left: 100rpx;
+  margin-right: 100rpx;
+ padding-top: 100rpx;  
+}

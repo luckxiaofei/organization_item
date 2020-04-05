@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="my-info">
+    <view class="profile-info" bindtap="goLogin">
+      <image class="avatar" src="{{userInfo.avatarUrl}}" />
+      <view class="my-info-name">
+        {{userInfo.nickName}}
+      </view>
+    </view>
+    <view class="my-info-money" bindtap="toMoneyDetail">
+      <view class="moneyCard">
+        <view class="moneyNumber">{{money}}元</view>
+        <view>账户金额
+          <van-icon name="arrow" />
+        </view>
+      </view>
+
+    </view>
+    <view class="my-info-order">
+      <view class="list-icon" bindtap="goOrder" data-index="1">
+        <view class="{{tabClass[1]}}"></view>
+        <image src="../../../images/my-icon-1.png" />
+        <text>我的订单</text>
+      </view>
+      <view class="list-icon" bindtap="goAddress" data-index="2">
+        <view class="{{tabClass[2]}}"></view>
+        <image src="../../../images/my-icon-4.png" />
+        <text>收货地址</text>
+      </view>
+      <view class="list-icon" bindtap="goMyCar" data-index="3">
+        <view class="{{tabClass[3]}}"></view>
+        <image src="../../../images/tabbar/cart-o.png" />
+        <text>购物车</text>
+      </view>
+      <view class="list-icon" bindtap="goUserScore" data-index="4">
+        <view class="{{tabClass[3]}}"></view>
+      </view>
+    </view>
+  </view>
+</view>

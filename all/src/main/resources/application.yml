@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: db, core, admin, wx
+  messages:
+    encoding: UTF-8
+
+server:
+  port: 8080
+  ssl:
+    key-store: classpath:3704730_www.qdbb.ltd.pfx
+    key-store-password: O0ipGCoo
+    key-store-type: PKCS12
+
+logging:
+  config: classpath:logback-spring.xml

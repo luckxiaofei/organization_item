@@ -1,0 +1,9 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="groupping">
+    <button open-type="grouping" bindtap="goGoup" > 来分组 </button>
+  </view>
+  <view class="sorting">
+    <button open-type="sorting" bindtap="goSort" > 排顺序 </button>
+  </view>
+</view>

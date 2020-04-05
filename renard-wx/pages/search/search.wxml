@@ -1,0 +1,33 @@
+<!--搜索框-->
+<view>
+    <van-search value="{{ searchValue }}" placeholder="请输入搜索关键词" bind:change="searchValueCahne" bind:search="onSearch"/>
+</view>
+<!--tab页-->
+<view>
+    <!-- 兑换区 -->
+    <van-grid column-num="2" gutter="10rpx" clickable>
+        <van-grid-item use-slot wx:for="{{ convertGoodsList }}" wx:key="{{item.id}}" link-type="navigateTo" url="/pages/goods/goods?id={{item.id}}">
+            <image class="goodsImage" src="{{item.picUrl}}"/>
+            <view class="goodsInfo">
+                <view class="goodsName van-ellipsis"> {{item.name}}</view>
+                <view class="goodsPrice"> 兑换所需青豆:{{item.convertScore}}</view>
+            </view>
+        </van-grid-item>
+    </van-grid>
+    <!-- 购买区 -->
+    <van-grid column-num="2" gutter="10rpx" clickable>
+        <van-grid-item use-slot wx:for="{{ otherGoodsList }}" wx:key="{{item.id}}" link-type="navigateTo" url="/pages/goods/goods?id={{item.id}}">
+            <image class="goodsImage" src="{{item.picUrl}}"/>
+            <view class="goodsInfo">
+                <view class="goodsName van-ellipsis"> {{item.name}}</view>
+                <view class="goodsPrice"> 价格￥{{item.retailPrice}}</view>
+                <view class="gooodsScore"> 赠送青豆:{{item.giveScore}}</view>
+            </view>
+        </van-grid-item>
+    </van-grid>
+
+    <view wx:if="{{(otherGoodsList==null|| otherGoodsList.length <=0)&& (convertGoodsList==null|| convertGoodsList.length <=0)}}">
+        <image class="icon" src="http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/noSearchResult-7572a94f32.png"></image>
+    </view>
+</view>
+

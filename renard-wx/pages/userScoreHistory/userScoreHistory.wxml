@@ -1,0 +1,8 @@
+<!--//钱包明细-->
+<view class="detail">
+    明细：
+</view>
+<!--<van-button round size="large" bind:click="Ordernotify">回调测试</van-button>-->
+<van-cell-group>
+    <van-cell wx:for="{{userScoreHistoryList}}" wx:for-item="item" wx:key="" title="{{item.channerName}}" value="{{item.score }}颗" label="{{item.addTime}}"/>
+</van-cell-group>

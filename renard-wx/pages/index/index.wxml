@@ -1,0 +1,46 @@
+<!--搜索框-->
+<view>
+  <van-search value="{{ searchValue }}" placeholder="请输入搜索关键词" bind:change="searchValueCahne"  bind:search="onSearch" />
+</view>
+<!--tab页-->
+<view>
+  <van-tabs active="{{ activeTab }}" bind:click="onClickTab" bind:change="changeTab">
+    <van-tab title="{{tab.name}}" name="{{tab.id}}" wx:for="{{channel}}" wx:key="{{tab.id}}" wx:for-item="tab">
+      <!-- 滚动区域-->
+      <view>
+        <swiper indicator-dots="{{true}}" autoplay="{{true}}" circular="{{true}}" interval="{{1000}}" duration="{{500}}">
+          <block wx:for="{{newGoodsList}}" wx:key="{{item.id}}">
+            <swiper-item>
+              <view class="swiper-item">
+                <van-image width="100%" height="150px" fit="fill" src="{{item.picUrl}}" data-id="{{item.id}}" />
+              </view>
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+
+      <!-- 兑换区 -->
+      <van-grid column-num="2" gutter="10rpx" clickable>
+        <van-grid-item use-slot wx:for="{{ convertGoodsList }}" wx:key="{{item.id}}" link-type="navigateTo" url="/pages/goods/goods?id={{item.id}}">
+          <image class="goodsImage" src="{{item.picUrl}}" />
+          <view class="goodsInfo">
+            <view class="goodsName van-ellipsis"> {{item.name}}</view>
+            <view class="goodsPrice"> 兑换所需青豆:{{item.convertScore}}</view>
+          </view>
+        </van-grid-item>
+      </van-grid>
+      <!-- 购买区 -->
+      <van-grid column-num="2" gutter="10rpx" clickable>
+        <van-grid-item use-slot wx:for="{{ otherGoodsList }}" wx:key="{{item.id}}" link-type="navigateTo" url="/pages/goods/goods?id={{item.id}}">
+          <image class="goodsImage" src="{{item.picUrl}}" />
+          <view class="goodsInfo">
+            <view class="goodsName van-ellipsis"> {{item.name}}</view>
+            <view class="goodsPrice"> 价格￥{{item.retailPrice}}</view>
+            <view class="gooodsScore"> 赠送青豆:{{item.giveScore}}</view>
+          </view>
+        </van-grid-item>
+      </van-grid>
+    </van-tab>
+
+  </van-tabs>
+</view>

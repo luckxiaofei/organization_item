@@ -1,0 +1,14 @@
+/**index.wxss**/
+.groupping {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20rpx;
+}
+
+.sorting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20rpx; 
+}

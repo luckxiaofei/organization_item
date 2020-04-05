@@ -1,0 +1,107 @@
+<van-notice-bar
+        left-icon="bullhorn-o"
+        text="{{notice_info}}"
+/>
+<view class="top">
+    <view class="scoreCard">
+        <view class="car">
+            <!-- 青豆余额 -->
+            <view class="score-info" bindtap="goScoreDetail">
+                <view class="number">
+                    青豆余额：{{scoreSum}}颗
+                </view>
+                <view class="comment">
+                    今日获得青豆：{{todayScoreSum}}颗
+                    <van-icon name="arrow"/>
+                    <!-- 当天的获得的青豆，第二天才能参与分红，需要完成一次商品购买且完成收货 -->
+                </view>
+            </view>
+            <!-- 分红 -->
+            <view class="score-share-info" bindtap="goShareMoneyDetail">
+                <view class="number">
+                    参与分红青豆：{{shareScoreSum}}颗
+                </view>
+                <view class="comment">
+                    今日获得分红：{{todayShareScoreSum}}元
+                    <van-icon name="arrow"/>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<view class="bottom">
+    <view>
+        每日任务
+    </view>
+    <van-cell-group>
+        <!-- 签到任务 -->
+        <van-cell>
+            <view>
+                <van-button type="info" color="#a78845" round size="small" bind:click="clickSignIn">立即签到</van-button>
+            </view>
+            <view slot="title">
+                签到领青豆
+            </view>
+        </van-cell>
+        <!-- 看广告任务 -->
+        <van-cell>
+            <view>
+                <van-button type="info" color="#a78845" round size="small" bind:click="clickAd">立即观看</van-button>
+            </view>
+            <view slot="title">
+                观看视频领青豆
+            </view>
+        </van-cell>
+        <!-- 浏览商品 -->
+        <van-cell>
+            <view>
+                <van-button type="info" color="#a78845" round size="small" bind:click="clickBrowseGoods">立即浏览</van-button>
+            </view>
+            <view slot="title">
+                浏览商品领青豆
+            </view>
+        </van-cell>
+        <!-- 浏览商品 -->
+        <van-cell>
+            <view>
+                <van-button type="info" color="#a78845" round size="small" bind:click="clickShareFriend">立即邀请</van-button>
+            </view>
+            <view slot="title">
+                邀请好友领青豆
+            </view>
+        </van-cell>
+    </van-cell-group>
+
+
+    <van-cell-group>
+        <!-- 我的好友 -->
+        <van-cell title="我的好友" value="{{friendSum}}" link-type="navigateTo"  url="/pages/userFriend/userFriend"/>
+    </van-cell-group>
+
+    <van-collapse value="{{ activeNames }}" bind:change="onChange">
+        <!-- 规则说明 -->
+        <van-collapse-item title="规则说明" name="1">
+            {{rule_info}}
+        </van-collapse-item>
+        <!-- 排行榜 -->
+        <van-collapse-item title="青豆排行榜" name="2">
+            <view>
+                <van-cell title="{{key}}" value="{{item}}" size="large" wx:for="{{scoreTop}}" wx:for-index='key' wx:key="{{key}}颗"/>
+            </view>
+        </van-collapse-item>
+    </van-collapse>
+</view>
+
+<!--<image src="{{friendImage}}" background-size="cover"></image>-->
+
+<van-overlay show="{{ showShareImage }}" bind:click="onClickHide">
+  <view >
+ <van-image 
+ class="image"
+  width="550rpx"
+  height="550rpx"
+  src="{friendImage}"
+/>
+  </view>
+</van-overlay>

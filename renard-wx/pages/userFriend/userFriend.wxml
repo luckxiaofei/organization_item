@@ -1,0 +1,9 @@
+<!--//钱包明细-->
+<view class="detail">
+    好友明细：
+</view>
+
+<van-cell-group>
+    <van-cell wx:for="{{userFriend}}" wx:for-item="item" wx:key=""
+              title="好友：{{item.friendUserName}}" value="佣金：{{item.commission}}元"/>
+</van-cell-group>

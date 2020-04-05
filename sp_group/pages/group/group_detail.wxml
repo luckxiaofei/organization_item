@@ -1,0 +1,41 @@
+<shareView id="shareView"></shareView>
+<view>
+  <view class="detail_type">
+    <view style="display:flex;">
+      <image src="../images/timg.jpg" class="round_icon"></image>
+      <text class="ts_type">{{cyInfo}}</text>
+    </view>
+    <view class="zt_type">
+      <text>{{subject}}</text>
+    </view>
+    <view class="jd_type">
+      <text>{{rnum}}/{{pnum}}人已参与</text>
+    </view>
+    <view class="nn_type">
+      <button class="btn_type">参与分组</button>
+    </view>
+  </view>
+  <scroll-view scroll-y style="height:300px">
+    <block wx:for="{{groupDetails}}" wx:key="groupDetails" wx:for-item="item">
+      <view>
+        <text>{{item.name}}</text>
+        <view class="divLine"></view>
+        <view class="person_type">
+          <view wx:for="{{item.personList}}" wx:for-item="person" wx:key="person">
+            <view class="p_info_type">
+              <image src="{{person.imgUrl==''?'../images/person.png':person.imgUrl}}" class="round_icon"></image>
+              <text class="p_txt_type">{{person.name==''?'未分组':person.name}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <view class="botton_view_type">
+    <view class="s_btn_type"  bindtap="showShareView">首页</view>
+    <view class="s_btn_type">导出</view>
+    <view class="s_btn_type">创建</view>
+    <view class="m_btn_type">分享分组</view>
+  </view>
+</view>

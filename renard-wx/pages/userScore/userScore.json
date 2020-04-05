@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我的青豆",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "van-overlay": "./@vant/weapp/overlay/index"
+  }
+}

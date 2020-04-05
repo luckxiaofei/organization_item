@@ -1,0 +1,33 @@
+<view class='mask' hidden='{{maskFlag}}' ></view>
+<view class="main_view">
+  <view class="flex-wrp bc_green">
+    <text class="flex-wrp text_type">输入主题和人数，分享页面给群好友\n</text>
+    <text class="flex-wrp text_type">系统随机分配各个小伙伴的顺序</text>
+    <view class="view_bottom">
+      <input class="weui-input zt_input_type" maxlength="10" placeholder="  输入主题，如“表演顺序”"></input>
+    </view>
+  </view>
+  <view class="flex-wrp info_view">
+  </view>
+  <view> 
+   <view class="divLine" style="margin-top:5px;height:15px"></view> 
+    <view class=" page-section-spacing">
+      <view class="flex-item">
+       <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+    <view class="picker">
+      当前选择：{{array[index]}}
+    </view>
+  </picker>
+        <text>参与人数</text>
+        <input maxlength="2" placeholder="请输入参与总人数"></input>
+      </view>
+      
+      <view class="divLine"></view>
+      <text>参与人需填写姓名                  </text>
+      <switch checked="{{switch1Checked}}" />
+    </view>
+    <view>
+      <button class="btn_type" bindtap="submit" >马上发布</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,9 @@
+<view>
+  <van-cell-group>
+    <van-field value="{{ money }}" placeholder="请输入金额" border="{{ true }}" size="large" type="digit" bind:change="onChange" />
+  </van-cell-group>
+</view>
+<view class="pay_button">
+  <van-button wx-if="{{type=='in'}}" round size="large" type="primary" bind:click="payOrder">立即支付</van-button>
+  <van-button wx-if="{{type=='out'}}" round size="large" type="primary" bind:click="entPay">立即提现</van-button>
+</view>
