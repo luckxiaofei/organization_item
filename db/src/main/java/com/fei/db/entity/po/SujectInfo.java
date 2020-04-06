@@ -66,4 +66,84 @@ public class SujectInfo {
      */
     private Boolean deleted;
 
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean getNeedName() {
+        return needName;
+    }
+
+    public void setNeedName(boolean needName) {
+        this.needName = needName;
+    }
+
+    public int getPeopleSum() {
+        return peopleSum;
+    }
+
+    public void setPeopleSum(int peopleSum) {
+        this.peopleSum = peopleSum;
+    }
+
+    public int getGroupSum() {
+        return groupSum;
+    }
+
+    public void setGroupSum(int groupSum) {
+        this.groupSum = groupSum;
+    }
+
+    public Long getType() {
+        return type;
+    }
+
+    public void setType(Long type) {
+        this.type = type;
+    }
+
+    public Date getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(Date addTime) {
+        this.addTime = addTime;
+    }
+
+    public Integer getAddUserId() {
+        return addUserId;
+    }
+
+    public void setAddUserId(Integer addUserId) {
+        this.addUserId = addUserId;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 }

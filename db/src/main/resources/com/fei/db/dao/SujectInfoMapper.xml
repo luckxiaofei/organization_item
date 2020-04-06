@@ -17,11 +17,12 @@
         <result column="deleted" jdbcType="BIT" property="deleted"/>
     </resultMap>
 
-    <resultMap  id="MapVO" type="com.fei.db.entity.vo.SubjectInfoVO" extends="BaseResultMap">
+    <resultMap id="MapVO" type="com.fei.db.entity.vo.SubjectInfoVO" extends="BaseResultMap">
         <collection ofType="com.fei.db.entity.po.GroupDetail" property="groupDetailList" columnPrefix="gd_">
             <id column="id" jdbcType="INTEGER" property="id"/>
             <result column="suject_info_id" jdbcType="INTEGER" property="sujectInfoId"/>
             <result column="user_id" jdbcType="INTEGER" property="userId"/>
+            <result column="user_name" jdbcType="VARCHAR" property="userName"/>
             <result column="user_iamge_url" jdbcType="VARCHAR" property="userIamgeUrl"/>
             <result column="group_number" jdbcType="INTEGER" property="groupNumber"/>
             <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
@@ -32,6 +33,7 @@
             <id column="id" jdbcType="INTEGER" property="id"/>
             <result column="suject_info_id" jdbcType="INTEGER" property="sujectInfoId"/>
             <result column="user_id" jdbcType="INTEGER" property="userId"/>
+            <result column="user_name" jdbcType="VARCHAR" property="userName"/>
             <result column="user_iamge_url" jdbcType="VARCHAR" property="userIamgeUrl"/>
             <result column="sort" jdbcType="INTEGER" property="sort"/>
             <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
@@ -54,6 +56,7 @@
                gd.id             gd_id,
                gd.suject_info_id gd_suject_info_id,
                gd.user_id        gd_user_id,
+               gd.user_name      gd_user_name,
                gd.user_iamge_url gd_user_iamge_url,
                gd.group_number   gd_group_number,
                gd.add_time       gd_add_time,
@@ -61,6 +64,7 @@
                sd.id             sd_id,
                sd.suject_info_id sd_suject_info_id,
                sd.user_id        sd_user_id,
+               sd.user_name      sd_user_name,
                sd.user_iamge_url sd_user_iamge_url,
                sd.sort           sd_sort,
                sd.add_time       sd_add_time

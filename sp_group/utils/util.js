@@ -36,9 +36,7 @@ function request(url, data = {}, method = "GET") {
                 'wx_token': wx.getStorageSync('token')
             },
             success: function (res) {
-
                 if (res.statusCode == 200) {
-
                     if (res.data.errno == 501) {
                         // 清除登录相关内容
                         try {
@@ -49,15 +47,16 @@ function request(url, data = {}, method = "GET") {
                         }
                         // 切换到登录页面
                         wx.navigateTo({
-                            url: '/pages/auth/login/login'
+                            url: '/pages/login/login'
                         });
+                    } else if (res.data.errno == -1) {
+                        showErrorToast(res.data.errmsg);
                     } else {
                         resolve(res.data);
                     }
                 } else {
                     reject(res.errMsg);
                 }
-
             },
             fail: function (err) {
                 reject(err)
@@ -111,4 +110,5 @@ module.exports = {
     isInteger,
     navigateTo,
     goLogin
+    , showToast
 };

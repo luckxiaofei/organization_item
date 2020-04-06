@@ -14,6 +14,7 @@
     <result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
     <result column="user_level" jdbcType="TINYINT" property="userLevel" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="weixin_openid" jdbcType="VARCHAR" property="weixinOpenid" />

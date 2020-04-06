@@ -97,7 +97,18 @@ public class SubjectService {
             subjectInfoVO.setGroupNumber(groupDetail.getGroupNumber());
         }
         if (Collections3.isNotEmpty(subjectInfoVO.getGroupDetailList())) {
-            Map<Integer, List<GroupDetail>> listMap = subjectInfoVO.getGroupDetailList().stream().collect(Collectors.groupingBy(GroupDetail::getGroupNumber));
+            Map<Integer, List<GroupDetail>> listMap = subjectInfoVO.getGroupDetailList().stream().sorted(new Comparator<GroupDetail>() {
+                @Override
+                public int compare(GroupDetail o1, GroupDetail o2) {
+                    if (o1.getUserId() > o2.getUserId()) {
+                        return -1;
+                    } else if (o1.getUserId() < o2.getUserId()) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            }).collect(Collectors.groupingBy(GroupDetail::getGroupNumber));
             subjectInfoVO.setGroupDetailMap(listMap);
             subjectInfoVO.setGroupDetailList(Collections.EMPTY_LIST);
             List<GroupDetail> groupDetails = subjectInfoVO.getGroupDetailList().stream().filter(p -> p.getUserId() != null && p.getUserId() > 0).collect(Collectors.toList());
@@ -105,7 +116,7 @@ public class SubjectService {
             subjectInfoVO.setGroupMaxNumber(0);
             for (Integer key : listMap.keySet()) {
                 int size = listMap.get(key).size();
-                if (size>subjectInfoVO.getGroupMaxNumber()){
+                if (size > subjectInfoVO.getGroupMaxNumber()) {
                     subjectInfoVO.setGroupMaxNumber(size);
                 }
             }
@@ -138,13 +149,13 @@ public class SubjectService {
     }
 
     public int addSortDetail(Integer subjectId, Integer userId) throws BussinessException {
-        SubjectInfoVO subjectDetail = this.getSubjectDetail(subjectId, subjectId);
-        List<SortDetail> sortDetailList = subjectDetail.getSortDetailList();
-        if (sortDetailList.stream().anyMatch(p -> p.getUserId() != userId)) {
+        SubjectInfoVO subjectInfoVO = sujectInfoMapper.getSubjectInfoVO(subjectId);
+        List<SortDetail> sortDetailList = subjectInfoVO.getSortDetailList();
+        if (sortDetailList.stream().anyMatch(p -> p.getUserId() == userId)) {
             logger.info(">>>>已参加,不能重复参加");
             throw new BussinessException("不能重复参加");
         }
-        int peopleSum = subjectDetail.getPeopleSum();
+        int peopleSum = subjectInfoVO.getPeopleSum();
         Integer size = Optional.ofNullable(sortDetailList.size()).orElse(0);
         if (size == peopleSum) {
             logger.info(">>>>排序已满员");
@@ -172,13 +183,13 @@ public class SubjectService {
     }
 
     public int addGroupDetail(Integer subjectId, Integer userId) throws BussinessException {
-        SubjectInfoVO subjectDetail = this.getSubjectDetail(subjectId, subjectId);
-        List<GroupDetail> groupDetailList = subjectDetail.getGroupDetailList();
-        if (groupDetailList.stream().anyMatch(p -> p.getUserId() != userId)) {
+        SubjectInfoVO subjectInfoVO = sujectInfoMapper.getSubjectInfoVO(subjectId);
+        List<GroupDetail> groupDetailList = subjectInfoVO.getGroupDetailList();
+        if (groupDetailList.stream().anyMatch(p -> p.getUserId() == userId)) {
             logger.info(">>>>已参加,不能重复参加");
             throw new BussinessException("不能重复参加");
         }
-        int peopleSum = subjectDetail.getPeopleSum();
+        int peopleSum = subjectInfoVO.getPeopleSum();
         Integer size = Optional.ofNullable(groupDetailList.size()).orElse(0);
         if (size == peopleSum) {
             logger.info(">>>>排序已满员");
@@ -192,8 +203,14 @@ public class SubjectService {
         SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
         groupDetail.setUserId(userId);
         groupDetail.setUserIamgeUrl(sysUser.getAvatar());
+
+        if (subjectInfoVO.getNeedName()) {
+            groupDetail.setUserName(sysUser.getUserName());
+        } else {
+            groupDetail.setUserName(sysUser.getNickname());
+        }
         groupDetail.setUpdateTime(new Date());
-        return groupDetailMapper.insertSelective(groupDetail);
+        return groupDetailMapper.updateByPrimaryKeySelective(groupDetail);
     }
 
 

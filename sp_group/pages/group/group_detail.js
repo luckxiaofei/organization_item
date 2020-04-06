@@ -42,23 +42,16 @@ Page({
         util.request(api.getGroupDetail, {
             subjectId: subjectId,
         }).then(function (res) {
-            if (res.errno === 0) {
-                let peopleSum = res.data.peopleSum;
-                that.setData({
-                    subjectName: res.data.name,
-                    peopleSum: peopleSum,
-                    joinSum: res.data.groupDetailList.length,
-                    groupDetailMap: res.data.groupDetailMap,
-                    isJoin: res.data.isJoin,
-                    groupNumber: res.data.groupNumber,
-                    groupMaxNumber: res.data.groupMaxNumber
-                })
-                peopleSum
-            } else if (res.errno === 501) {
-                util.goLogin();
-            } else if (res.errno === -1) {
-                util.showErrorToast()
-            }
+            let peopleSum = res.data.peopleSum;
+            that.setData({
+                subjectName: res.data.name,
+                peopleSum: peopleSum,
+                joinSum: res.data.groupDetailList.length,
+                groupDetailMap: res.data.groupDetailMap,
+                isJoin: res.data.isJoin,
+                groupNumber: res.data.groupNumber,
+                groupMaxNumber: res.data.groupMaxNumber
+            })
         });
 
         console.log(options)
@@ -66,16 +59,12 @@ Page({
 
     //参与
     join: function (res) {
+
+
         util.request(api.groupAddDetail, {
-            name: this.data.subject
+            subjectId: this.data.subjectId
         }).then(function (res) {
-            if (res.errno === 0) {
-                util.navigateTo("/pages/group/group_detail")
-            } else if (res.errno === 501) {
-                util.goLogin();
-            } else if (res.errno === -1) {
-                util.showErrorToast()
-            }
+            util.showToast("参与成功");
         });
     },
     goHome: function () {

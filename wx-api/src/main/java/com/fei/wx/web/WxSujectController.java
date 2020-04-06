@@ -35,7 +35,7 @@ public class WxSujectController {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
-        return ResponseUtil.ok(subjectService.getSubjectDetail(subjectId, subjectId));
+        return ResponseUtil.ok(subjectService.getSubjectDetail(subjectId, userId));
     }
 
     @GetMapping("/group/add/detail")

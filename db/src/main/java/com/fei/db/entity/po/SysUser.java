@@ -52,6 +52,12 @@ public class SysUser {
     private String nickname;
 
     /**
+     * 用户自己填写的名字
+     */
+    @Column(name = "user_name")
+    private String userName;
+
+    /**
      * 用户手机号码
      */
     private String mobile;
@@ -251,6 +257,24 @@ public class SysUser {
      */
     public void setNickname(String nickname) {
         this.nickname = nickname == null ? null : nickname.trim();
+    }
+
+    /**
+     * 获取用户自己填写的名字
+     *
+     * @return user_name - 用户自己填写的名字
+     */
+    public String getUserName() {
+        return userName;
+    }
+
+    /**
+     * 设置用户自己填写的名字
+     *
+     * @param userName 用户自己填写的名字
+     */
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
     }
 
     /**
