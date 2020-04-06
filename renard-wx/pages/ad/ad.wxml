@@ -1,3 +1,0 @@
-<view class="adContainer">
-  <ad unit-id="{{adId}}" ad-type="video" ad-theme="white" bindload="adLoad" binderror="adError" bindclose="adClose"></ad>
-</view>

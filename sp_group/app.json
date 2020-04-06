@@ -6,7 +6,8 @@
     "pages/sort/sort_detail",
     "pages/sort/sort",
     "pages/logs/logs",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/myInfo/myInfo"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -29,5 +30,24 @@
     "van-grid": "@vant/weapp/grid/index",
     "van-grid-item": "@vant/weapp/grid-item/index",
     "van-divider": "@vant/weapp/divider/index"
+  },
+  "tabBar": {
+    "color": "#6e6d6b",
+    "selectedColor": "#e64340",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "box-shadow": "0 0 6px 0",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home_black.png"
+      },
+      {
+        "pagePath": "pages/myInfo/myInfo",
+        "iconPath": "images/people.png",
+        "selectedIconPath": "images/people_black.png"
+      }
+    ]
   }
 }
