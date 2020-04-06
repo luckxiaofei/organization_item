@@ -1,48 +1,39 @@
 <shareView id="shareView"></shareView>
 <view>
-  <view class="detail_type">
-    <view style="display:flex;">
-      <image src="{{userInfo.avatarUrl}}" class="round_icon"></image>
-      <text class="ts_type">{{userInfo.nickName}},你还未参与分组</text>
-    </view>
-    <view class="zt_type">
-      <text>{{subject}}</text>
-    </view>
-    <view class="jd_type">
-      <text>0/9张卡片已被抽取</text>
-    </view>
-    <view class="nn_type">
-      <button class="btn_type">参与排序</button>
-    </view>
-  </view>
-  <scroll-view scroll-y style="height:300px;margin-left:10px;position:fixed; ">
-    <view wx:for="{{sortLists}}" wx:key="sortLists" wx:for-item="item">
-
-      <view class="main" style="display: flex;">
-        <view class="item item1" style="display: flex;">
-          <image src="../images/timg.jpg" class="round_icon"></image>
+    <view class="detail_type">
+        <view style="display:flex;">
+            <image src="{{userInfo.avatarUrl}}" class="round_icon"></image>
+            <text class="ts_type" wx:if="{{!isJoin}}">{{userInfo.nickName}},你还未参与分组</text>
+            <text class="ts_type" wx:if="{{isJoin}}">哇塞，你抽到了第{{ranking}}名</text>
         </view>
-        <view class="item item2" >
-          <view>{{item.name}}</view>
-          <view class="context date">{{item.date}} </view>
+        <view class="zt_type">
+            <text>{{subjectName}}</text>
         </view>
-        <view class="item item3" style="display: flex;">{{item.sort}}</view>
-      </view>
-
-      <view class="divLine"></view>
-      <!-- <view class="main" style="display: flex;">
-        <view class="item item1" style="display: flex;">1</view>
-        <view class="item item2" style="display: flex;">2</view>
-        <view class="item item3" style="display: flex;">3</view>
-      </view> -->
-
+        <view class="jd_type">
+            <text>{{rankingUse}}/{{rankingSum}}张卡片已被抽取</text>
+        </view>
+        <view class="nn_type" wx:if="{{!isJoin}}">
+            <button class="btn_type" bindtap="join">参与排序</button>
+        </view>
     </view>
-  </scroll-view>
+    <scroll-view scroll-y style="height:300px;margin-left:10px;position:fixed; ">
+        <view wx:if="{{isJoin}}" wx:for="{{sortLists}}" wx:key="sortLists" wx:for-item="item">
+            <van-cell title="{{item.name}}" value="{{item.sort}}" label="{{item.date}}">
+                <view slot="icon">
+                    <image src="{{userInfo.avatarUrl}}" class="round_icon2"></image>
+                </view>
 
-  <view class="botton_view_type">
-    <view class="s_btn_type" bindtap="showShareView">首页</view>
-    <view class="s_btn_type">导出</view>
-    <view class="s_btn_type">创建</view>
-    <view class="m_btn_type">分享分组</view>
-  </view>
+            </van-cell>
+        </view>
+        <view wx:if="{{!isJoin}}" class="noJoin">
+            暂无人抽取
+        </view>
+    </scroll-view>
+
+    <van-goods-action>
+        <van-goods-action-icon icon="wap-home-o" text="首页" bind:click="goHome"/>
+        <van-goods-action-icon icon="records" text="导出" bind:click="exportSort"/>
+        <van-goods-action-icon icon="add-o" text="创建" bind:click="addSort"/>
+        <van-goods-action-button color="#FFD700" text="分享排序" bind:click="onShareAppMessage"/>
+    </van-goods-action>
 </view>

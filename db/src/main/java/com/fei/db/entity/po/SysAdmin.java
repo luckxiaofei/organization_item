@@ -53,7 +53,6 @@ public class SysAdmin {
      */
     private Boolean deleted;
 
-
     /**
      * @return id
      */
@@ -211,6 +210,4 @@ public class SysAdmin {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
-
-
 }

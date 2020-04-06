@@ -42,13 +42,57 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
-		"miniprogram": {
+		"gamePlugin": {
 			"current": -1,
 			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/group/group",
+					"pathName": "pages/group/group",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/sort/sort",
+					"pathName": "pages/sort/sort",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "pages/group/group_detail",
+					"pathName": "pages/group/group_detail",
+					"query": "subjectId= 9",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "/pages/test/test",
+					"pathName": "pages/test/test",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/sort/sort_detail",
+					"pathName": "pages/sort/sort_detail",
+					"query": "",
+					"scene": null
+				}
+			]
 		}
 	}
 }

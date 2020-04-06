@@ -1,159 +1,102 @@
-// pages/group/group_detail.js
+const app = getApp()
+var util = require('../../utils/util.js');
+var api = require('../../config/api.js');
+var user = require('../../utils/user.js');
+
 Page({
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    id:'',
-    new:false,
-    groupDetails:[],
-    pnum:'',
-    rnum:'',
-    subject:'',
-    userInfo:{},
-    openId:'',
-    isCy:false,
-    cyInfo:'',
-    cyz:'',
- 
-  },
+    /**
+     * 页面的初始数据
+     */
+    data: {
+        userInfo: {},
+        subjectId: 0,
+        subjectName: "主题",
+        isJoin: false,
+        groupNumber: 0,
+        peopleSum: 9,
+        joinSum: 0,
+        groupDetailMap: {}
+    },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    var that  = this ;
-    //获取用户信息
-    wx.getUserInfo({
-      success: function (res) {
-
-        console.log(res);
-        that.data.userInfo = res.userInfo;
-
+    /**
+     * 生命周期函数--监听页面加载
+     */
+    onLoad: function (options) {
+        var that = this;
+        let subjectId = options.subjectId;
         that.setData({
-          userInfo: that.data.userInfo
+            subjectId: subjectId
         })
-      }
-    })
-    this.shareView = this.selectComponent("#shareView")
-    this.setData({
-      id: options.id,
-      new:options.new,
-      openId:options.openId
-    })
-    if (this.data.new) {
-      this.shareView.toggleDialog(true);
-    }
-    if(this.data.id==""){
-    
-      wx.showToast({
-        title: '获取任务信息失败！',
-        icon: 'none'
-      })
-    }else{
-      var that = this;
-      wx.request({
-        url: 'http://192.168.51.17:8080/getGroup', //仅为示例，并非真实的接口地址
-        method: "POST",
-        data: {
-          id: this.data.id, 
-          userId:this.data.userInfo.id,
-          openId:this.data.openId
-        },
-        header: {
-          "Content-Type": "application/x-www-form-urlencoded;charsetset=UTF-8"// 默认值
-        },
-        success: function (res) {
-          if(res.data!=null){
-            that.setData({
-              subject:res.data.subject,
-              pnum: res.data.pnum,
-              rnum: res.data.rnum,
-              groupDetails: res.data.groupDetails,
-              isCy:res.data.cy,
-              cyz:res.data.cyz,
-            })
-            debugger
-            if (res.data.cy){
-              that.setData({
-               cyInfo:"您被分配到"+res.data.cyz
-              })
 
-            }else{
-              debugger
-              that.setData({
-                cyInfo: "您未参与分组，请点击参与分组" 
-              })
+        //获取用户信息
+        wx.getUserInfo({
+            success: function (res) {
+                that.data.userInfo = res.userInfo;
+                that.setData({
+                    userInfo: that.data.userInfo
+                })
             }
-          }
-          if (res.data.status == 1) {
-            console.info("======发布id:" + res.data.data.group.id);
-            wx.navigateTo({
-              url: '../group/group_detail?id=' + res.data.data.group.id
-            })
-          } else {
-            wx.showToast({
-              title: '发布失败，请重试',
-              icon: 'none'
-            })
-          }
-          console.log(res.data)
+        })
+
+        util.request(api.getGroupDetail, {
+            subjectId: subjectId,
+        }).then(function (res) {
+            if (res.errno === 0) {
+                let peopleSum = res.data.peopleSum;
+                that.setData({
+                    subjectName: res.data.name,
+                    peopleSum: peopleSum,
+                    joinSum: res.data.groupDetailList.length,
+                    groupDetailMap: res.data.groupDetailMap,
+                    isJoin: res.data.isJoin,
+                    groupNumber: res.data.groupNumber,
+                    groupMaxNumber: res.data.groupMaxNumber
+                })
+                peopleSum
+            } else if (res.errno === 501) {
+                util.goLogin();
+            } else if (res.errno === -1) {
+                util.showErrorToast()
+            }
+        });
+
+        console.log(options)
+    },
+
+    //参与
+    join: function (res) {
+        util.request(api.groupAddDetail, {
+            name: this.data.subject
+        }).then(function (res) {
+            if (res.errno === 0) {
+                util.navigateTo("/pages/group/group_detail")
+            } else if (res.errno === 501) {
+                util.goLogin();
+            } else if (res.errno === -1) {
+                util.showErrorToast()
+            }
+        });
+    },
+    goHome: function () {
+        wx.navigateTo({
+            url: "/pages/index/index"
+        })
+    },
+
+
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function (res) {
+        this.shareView.toggleDialog(false);
+        return {
+            title: this.data.subject,
+            path: "/pages/sort/sort_detail?id=" + this.data.id,
+            imageUrl: "../images/shareImage.png",
         }
-      })
+    },
+    showShareView: function () {
+        this.shareView.toggleDialog(true);
     }
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-  
-  showShareView: function () {
-    this.shareView.toggleDialog(true);
-  }
 })

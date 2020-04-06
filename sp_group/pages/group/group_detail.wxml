@@ -1,41 +1,44 @@
 <shareView id="shareView"></shareView>
 <view>
-  <view class="detail_type">
-    <view style="display:flex;">
-      <image src="../images/timg.jpg" class="round_icon"></image>
-      <text class="ts_type">{{cyInfo}}</text>
-    </view>
-    <view class="zt_type">
-      <text>{{subject}}</text>
-    </view>
-    <view class="jd_type">
-      <text>{{rnum}}/{{pnum}}人已参与</text>
-    </view>
-    <view class="nn_type">
-      <button class="btn_type">参与分组</button>
-    </view>
-  </view>
-  <scroll-view scroll-y style="height:300px">
-    <block wx:for="{{groupDetails}}" wx:key="groupDetails" wx:for-item="item">
-      <view>
-        <text>{{item.name}}</text>
-        <view class="divLine"></view>
-        <view class="person_type">
-          <view wx:for="{{item.personList}}" wx:for-item="person" wx:key="person">
-            <view class="p_info_type">
-              <image src="{{person.imgUrl==''?'../images/person.png':person.imgUrl}}" class="round_icon"></image>
-              <text class="p_txt_type">{{person.name==''?'未分组':person.name}}</text>
-            </view>
-          </view>
+    <view class="detail_type">
+        <view style="display:flex;">
+            <image src="{{userInfo.avatarUrl}}" class="round_icon"></image>
+            <text class="ts_type" wx:if="{{!isJoin}}">{{userInfo.nickName}},你还未参与分组</text>
+            <text class="ts_type" wx:if="{{isJoin}}">哇塞，你抽到了第{{groupNumber}}名</text>
         </view>
-      </view>
-    </block>
-  </scroll-view>
+        <view class="zt_type">
+            <text>{{subjectName}}</text>
+        </view>
+        <view class="jd_type">
+            <text>{{joinSum}}/{{peopleSum}}张卡片已被抽取</text>
+        </view>
+        <view class="nn_type" wx:if="{{!isJoin}}">
+            <button class="btn_type" bindtap="join">参与排序</button>
+        </view>
+    </view>
+    <scroll-view scroll-y style="height:300px;margin-left:10px;position:fixed; ">
 
-  <view class="botton_view_type">
-    <view class="s_btn_type"  bindtap="showShareView">首页</view>
-    <view class="s_btn_type">导出</view>
-    <view class="s_btn_type">创建</view>
-    <view class="m_btn_type">分享分组</view>
-  </view>
+        <view wx:for="{{groupDetailMap}}" wx:key="*this" wx:for-index='groupNumber' wx:for-item="groupDetailList">
+            <van-divider contentPosition="center">分组{{groupNumber}}</van-divider>
+            <scroll-view scroll-x>
+                <view class='hor'>
+                    <block  wx:for="{{ groupDetailList }}" wx:for-item="groupDetail">
+                        <view>
+                            <image class="round_icon3" src="/images/people.png"/>
+                            <view class="ts_type">待分组</view>
+                        </view>
+                    </block>
+                </view>
+            </scroll-view>
+        </view>
+
+
+    </scroll-view>
+
+    <van-goods-action>
+        <van-goods-action-icon icon="wap-home-o" text="首页" bind:click="goHome"/>
+        <van-goods-action-icon icon="records" text="导出" bind:click="exportSort"/>
+        <van-goods-action-icon icon="add-o" text="创建" bind:click="addSort"/>
+        <van-goods-action-button color="#FFD700" text="分享排序" bind:click="onShareAppMessage"/>
+    </van-goods-action>
 </view>

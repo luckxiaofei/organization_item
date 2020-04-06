@@ -7,7 +7,6 @@ import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-@Repository
 public interface SysAdminMapper extends Mapper<SysAdmin> {
 
     List<SysAdminVO> listSysAdminVOByName(String name);

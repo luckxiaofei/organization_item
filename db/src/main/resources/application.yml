@@ -1,3 +1,5 @@
+
+
 spring:
   profiles:
     active: db
@@ -6,7 +8,8 @@ spring:
 
 logging:
   level:
-    root:  DEBUG
-    org.springframework:  DEBUG
+    root:  info
+    org.springframework:  info
     org.mybatis:  info
-    com.fei.db:  DEBUG
+    com.fei.db:  info
+

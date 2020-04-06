@@ -1,32 +1,40 @@
-<view class='mask' hidden='{{maskFlag}}' ></view>
 <view class="main_view">
-  <view class="flex-wrp bc_green">
-    <text class="flex-wrp text_type">输入主题和人数，分享页面给群好友\n</text>
-    <text class="flex-wrp text_type">系统随机分配各个小伙伴的分组</text>
-    <view class="view_bottom">
-      <input class="weui-input zt_input_type" maxlength="10" bindinput="useSubjectInput"  value='{{subject}}'  placeholder="  输入主题，如“广州塔一日游”"></input>
+    <view class="title">
+        <text class="flex-wrp text_type">输入主题和人数，分享页面给群好友\n</text>
+        <text class="flex-wrp text_type">系统随机分配各个小伙伴的分组</text>
     </view>
-  </view>
-  <view class="flex-wrp info_view">
-  </view>
-  <view> 
-   <view class="divLine" style="margin-top:5px;height:15px"></view> 
-    <view class=" page-section-spacing">
-      <view class="flex-item">
-        <text>总人数</text>
-        <input maxlength="2" placeholder="请输入参与总人数" bindinput="usePnumInput"  value='{{pnum}}' ></input>
-      </view>
-      <view class="divLine"></view>
-      <view class="flex-item">
-        <text>分组数</text>
-        <input maxlength="2" placeholder="请输入分组数"  bindinput="useGnumInput"  value='{{gnum}}'></input>
-      </view>
-      <view class="divLine"></view>
-      <text>参与人需填写姓名                  </text>
-      <switch checked="{{switch1Checked}}" bindchange="useIsName" />
+    <view class="subject van-hairline--surround">
+        <van-cell-group>
+            <van-field
+                    required
+                    clearable
+                    value="{{ subject }}"
+                    label="主题"
+                    placeholder="输入主题，如'广州塔一日游'"
+                    bind:change="useSubjectInput"
+            />
+        </van-cell-group>
     </view>
     <view>
-      <button class="btn_type" bindtap="submit" >马上发布</button>
+        <van-cell title="参与人数">
+            <view>
+                <van-stepper value="{{ 1 }}" max="99" bind:change="usePnumInput"/>
+            </view>
+        </van-cell>
+        <van-cell title="分组数">
+            <view>
+                <van-stepper value="{{ 1 }}" max="99" bind:change="useGnumInput"/>
+            </view>
+        </van-cell>
+        <van-cell title="参与人需填写姓名">
+            <view>
+                <van-switch checked="{{ needName }}" bind:change="isNeedName"/>
+            </view>
+        </van-cell>
+        <van-cell>
+            <van-button round  block color="#FFD700"  size="large" bindtap="submit" >马上发布</van-button>
+        </van-cell>
+
     </view>
-  </view>
+
 </view>

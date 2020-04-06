@@ -1,26 +1,44 @@
-@import "group.wxss";
 .detail_type{
-  
+
   width: 95%;
   height: 160px;
   background-color: #FFD700;
-  border-radius:7px;
+  border-radius:30rpx;
   margin: 0 auto;
+  margin-top: 20rpx;
 
 }
 .round_icon{
   width: 32px;
   height: 32px;
-  display: flex;
   border-radius: 50%;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  margin-top: 10px;
+  margin-left: 30rpx;
 }
+
+.round_icon2{
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.round_icon3{
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+  margin-left: 30rpx;
+}
+
 .ts_type{
   color: rgb(146, 156, 137);
-  margin-top: 10px;
-  margin-left:10px; 
+  font-size: 12px;
+  margin-top: 18px;
+  margin-left:10px;
 }
 .zt_type{
   margin-top: 20px;
@@ -30,20 +48,21 @@
 }
 .jd_type{
   margin-top: 3px;
-  font-size: 12px;  
+  font-size: 12px;
   color: white;
   text-align: center
 }
 .nn_type{
   margin-top: -5px;
-  font-size: 22px;  
+  font-size: 22px;
   text-align: center;
- 
+
 }
 .btn_type{
-   border-radius:17px;
-   background-color:  black;
-   color: #FFD700;
+  border-radius:17px;
+  background-color:  black;
+  color: #FFD700;
+  margin-top: 20rpx;
 }
 .person_type{
   display:flex;
@@ -60,7 +79,7 @@
   display:flex;
   background-color: rgba(241, 247, 243, 0.952);
   height: 35px;
-  position:fixed; 
+  position:fixed;
   bottom:0;
   width: 750rpx;
 }
@@ -71,13 +90,56 @@
   margin-right: 2px;
   font-size: 11px;
   background-color:  rgb(223, 221, 143);
-  
+
 }
 .m_btn_type{
   text-align: center;
-   width:  100px;
+  width:  100px;
   margin-right: 2px;
   font-size: 16px;
   background-color:  rgb(243, 187, 82);
-  
+
+}
+
+.date{
+  font-size: 14px;
+  color: #888088;
+}
+
+.main {
+  width: 100%;
+}
+
+.item2 {
+  margin-top: 10px;
+  width: 200px;
+  font-size: 14px;
+}
+
+.item3 {
+  margin-top: 10px;
+  float: right;
+  font-size: 14px;
+
+}
+
+/* .item1 {
+  background-color: red;
+}
+
+
+
+*/
+
+.noJoin{
+  text-align: center;
+  margin-top: 150rpx;
+  color: #888088;
+}
+
+
+.hor {
+  display: flex;
+  flex-direction: row;
+  width: 100rpx;
 }

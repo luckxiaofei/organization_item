@@ -102,6 +102,13 @@ public class ResponseUtil {
         return obj;
     }
 
+    public static Object fail(String errmsg) {
+        Map<String, Object> obj = new HashMap<String, Object>();
+        obj.put("errno", -1);
+        obj.put("errmsg", "错误");
+        return obj;
+    }
+
     public static Object fail(int errno, String errmsg) {
         Map<String, Object> obj = new HashMap<String, Object>();
         obj.put("errno", errno);

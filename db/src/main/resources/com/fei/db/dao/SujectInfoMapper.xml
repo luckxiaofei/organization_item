@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fei.db.dao.SujectInfoMapper">
+    <resultMap id="BaseResultMap" type="com.fei.db.entity.po.SujectInfo">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="need_name" jdbcType="VARCHAR" property="needName"/>
+        <result column="people_sum" jdbcType="VARCHAR" property="peopleSum"/>
+        <result column="group_sum" jdbcType="VARCHAR" property="groupSum"/>
+        <result column="type" jdbcType="BIGINT" property="type"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="add_user_id" jdbcType="INTEGER" property="addUserId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="deleted" jdbcType="BIT" property="deleted"/>
+    </resultMap>
+
+    <resultMap  id="MapVO" type="com.fei.db.entity.vo.SubjectInfoVO" extends="BaseResultMap">
+        <collection ofType="com.fei.db.entity.po.GroupDetail" property="groupDetailList" columnPrefix="gd_">
+            <id column="id" jdbcType="INTEGER" property="id"/>
+            <result column="suject_info_id" jdbcType="INTEGER" property="sujectInfoId"/>
+            <result column="user_id" jdbcType="INTEGER" property="userId"/>
+            <result column="user_iamge_url" jdbcType="VARCHAR" property="userIamgeUrl"/>
+            <result column="group_number" jdbcType="INTEGER" property="groupNumber"/>
+            <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+            <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+            <result column="deleted" jdbcType="BIT" property="deleted"/>
+        </collection>
+        <collection property="sortDetailList" ofType="com.fei.db.entity.po.SortDetail" columnPrefix="sd_">
+            <id column="id" jdbcType="INTEGER" property="id"/>
+            <result column="suject_info_id" jdbcType="INTEGER" property="sujectInfoId"/>
+            <result column="user_id" jdbcType="INTEGER" property="userId"/>
+            <result column="user_iamge_url" jdbcType="VARCHAR" property="userIamgeUrl"/>
+            <result column="sort" jdbcType="INTEGER" property="sort"/>
+            <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+            <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+            <result column="deleted" jdbcType="BIT" property="deleted"/>
+        </collection>
+    </resultMap>
+    <select id="getSubjectInfoVO" resultMap="MapVO">
+          select si.id,
+               si.name,
+               si.need_name,
+               si.people_sum,
+               si.group_sum,
+               si.type,
+               si.add_time,
+               si.add_user_id,
+               si.update_time,
+               si.deleted,
+
+               gd.id             gd_id,
+               gd.suject_info_id gd_suject_info_id,
+               gd.user_id        gd_user_id,
+               gd.user_iamge_url gd_user_iamge_url,
+               gd.group_number   gd_group_number,
+               gd.add_time       gd_add_time,
+
+               sd.id             sd_id,
+               sd.suject_info_id sd_suject_info_id,
+               sd.user_id        sd_user_id,
+               sd.user_iamge_url sd_user_iamge_url,
+               sd.sort           sd_sort,
+               sd.add_time       sd_add_time
+        from suject_info si
+                 left join group_detail gd on si.id = gd.suject_info_id
+                 left join sort_detail sd on si.id = sd.suject_info_id
+                 where si.id=#{sujectId}
+    </select>
+
+
+</mapper>

@@ -4,7 +4,7 @@
   
    <view class="zan-dialog__container">
    <view>
-    <image src="../images/dui.png" class="show_image"></image>  
+    <image src="../../images/dui.png" class="show_image"></image>
    </view>
    <view style="font-size:18px;font-weight:bold;font-family:Microsoft YaHei;margin-top:5px">
      发布成功 
