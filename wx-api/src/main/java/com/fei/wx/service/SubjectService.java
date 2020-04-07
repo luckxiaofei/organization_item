@@ -1,7 +1,10 @@
 package com.fei.wx.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.aliyun.oss.common.utils.DateUtil;
 import com.fei.db.dao.GroupDetailMapper;
 import com.fei.db.dao.SortDetailMapper;
 import com.fei.db.dao.SujectInfoMapper;
@@ -14,6 +17,7 @@ import com.fei.db.entity.vo.SubjectInfoVO;
 import com.fei.db.util.Collections3;
 import com.fei.wx.util.BussinessException;
 import com.google.common.collect.Lists;
+import com.qcloud.cos.utils.DateUtils;
 import jodd.util.StringUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -219,18 +223,27 @@ public class SubjectService {
     }
 
     public String groupExprot(Integer subjectId) {
+        //【hhhh】
+        //【总人数 9】
+        //【分组组数 3】
+        //【未参与人数 8】
+        //【分组 1：】
+        //【分组 2：】
+        //【分组 3：陈小飞 】
         SubjectInfoVO vo = sujectInfoMapper.getSubjectInfoVO(subjectId);
+        int size = vo.getGroupDetailList().stream().filter(p -> p.getUserId().equals(0)).collect(Collectors.toList()).size();
         StringBuffer builder = new StringBuffer();
         builder.append("【").append(vo.getName()).append("】").append("\n");
         builder.append("【").append("总人数").append(vo.getPeopleSum()).append("】").append("\n");
         builder.append("【").append("分组组数").append(vo.getGroupSum()).append("】").append("\n");
+        builder.append("【").append("未参与人数").append(size).append("】").append("\n");
         for (int i = 0; i < vo.getGroupSum(); i++) {
             int groupNumber = i + 1;
             String groupUserName = vo.getGroupDetailList().stream()
                     .filter(p -> p.getGroupNumber().equals(groupNumber))
                     .filter(p -> StringUtil.isNotBlank(p.getUserName()))
                     .map(GroupDetail::getUserName).collect(Collectors.joining(","));
-            builder.append("【").append("分组").append(groupNumber).append(groupUserName).append("】").append("\n");
+            builder.append("【").append("分组").append(groupNumber).append(": ").append(groupUserName).append("】").append("\n");
         }
         return builder.toString();
     }
@@ -266,20 +279,31 @@ public class SubjectService {
 
     public String sortExprot(Integer subjectId) {
         SubjectInfoVO vo = sujectInfoMapper.getSubjectInfoVO(subjectId);
-//        【dddd】
-//【1/2 张卡片被抽取】
-//【陈小飞  04-07 00:58:43 第 2 位】
+        List<SortDetail> sortDetailList = vo.getSortDetailList();
+        vo.setJoinSum(Optional.ofNullable(sortDetailList.size()).orElse(0));
+        //【dddd】
+        //【1/2 张卡片被抽取】
+        //【陈小飞  04-07 00:58:43 第 2 位】
         StringBuffer builder = new StringBuffer();
         builder.append("【").append(vo.getName()).append("】").append("\n");
-        builder.append("【").append("总人数").append(vo.getPeopleSum()).append("】").append("\n");
-        builder.append("【").append("分组组数").append(vo.getGroupSum()).append("】").append("\n");
-        for (int i = 0; i < vo.getGroupSum(); i++) {
-            int groupNumber = i + 1;
-            String groupUserName = vo.getGroupDetailList().stream()
-                    .filter(p -> p.getGroupNumber().equals(groupNumber))
-                    .filter(p -> StringUtil.isNotBlank(p.getUserName()))
-                    .map(GroupDetail::getUserName).collect(Collectors.joining(","));
-            builder.append("【").append("分组").append(groupNumber).append(groupUserName).append("】").append("\n");
+        builder.append("【").append(vo.getJoinSum()).append("/").append(vo.getPeopleSum()).append("张卡片被抽取").append("】").append("\n");
+        sortDetailList = sortDetailList.stream().sorted(new Comparator<SortDetail>() {
+            @Override
+            public int compare(SortDetail o1, SortDetail o2) {
+                if (o1.getSort() > o2.getSort()) {
+                    return -1;
+                } else if (o1.getSort() < o2.getSort()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        }).collect(Collectors.toList());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for (SortDetail sortDetail : sortDetailList) {
+            builder.append("【").append(sortDetail.getUserName())
+                    .append(dateFormat.format(sortDetail.getUpdateTime()))
+                    .append(" 第").append(sortDetail.getSort()).append("名】").append("\n");
         }
         return builder.toString();
     }
