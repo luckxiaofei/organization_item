@@ -1,0 +1,4 @@
+<van-cell title="我的资料" is-link   url="/pages/myInfo/myInfo" />
+<van-cell title="我的发起" is-link   url="/pages/myCaeate/myCaeate" />
+<van-cell title="我的参加" is-link    url="/pages/myJoin/myJoin"/>
+<van-cell title="我的客服" is-link    url="/pages/dashboard/index"/>

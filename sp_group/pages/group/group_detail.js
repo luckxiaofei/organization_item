@@ -2,6 +2,7 @@ const app = getApp()
 var util = require('../../utils/util.js');
 var api = require('../../config/api.js');
 var user = require('../../utils/user.js');
+import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 Page({
 
@@ -16,6 +17,8 @@ Page({
         groupNumber: 0,
         peopleSum: 9,
         joinSum: 0,
+        needName: false,
+        realName: false,
         groupDetailMap: {}
     },
 
@@ -23,6 +26,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        console.log(options)
         var that = this;
         let subjectId = options.subjectId;
         that.setData({
@@ -38,54 +42,75 @@ Page({
                 })
             }
         })
+        that.getBaseInfo()
+    },
 
+    getBaseInfo: function () {
+        var that = this;
         util.request(api.getGroupDetail, {
-            subjectId: subjectId,
+            subjectId: that.data.subjectId,
         }).then(function (res) {
             let peopleSum = res.data.peopleSum;
             that.setData({
                 subjectName: res.data.name,
                 peopleSum: peopleSum,
-                joinSum: res.data.groupDetailList.length,
+                joinSum: res.data.joinSum,
+                needName: res.data.needName,
+                realName: res.data.realName,
                 groupDetailMap: res.data.groupDetailMap,
                 isJoin: res.data.isJoin,
                 groupNumber: res.data.groupNumber,
-                groupMaxNumber: res.data.groupMaxNumber
+                groupMaxNumber: res.data.groupMaxNumber,
             })
         });
-
-        console.log(options)
     },
 
     //参与
     join: function (res) {
-
-
-        util.request(api.groupAddDetail, {
-            subjectId: this.data.subjectId
-        }).then(function (res) {
-            util.showToast("参与成功");
-        });
+        var that = this;
+        if (that.data.needName && !that.data.realName) {
+            Dialog.alert({
+                message: '前往完善姓名'
+            }).then(() => {
+                util.navigateTo('/pages/myInfo/myInfo')
+            });
+        } else {
+            util.request(api.groupAddDetail, {
+                subjectId: this.data.subjectId
+            }).then(function (res) {
+                util.showToast("参与成功");
+                that.getBaseInfo()
+            });
+        }
     },
     goHome: function () {
-        wx.navigateTo({
+        wx.switchTab({
             url: "/pages/index/index"
         })
     },
-
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function (res) {
-        this.shareView.toggleDialog(false);
-        return {
-            title: this.data.subject,
-            path: "/pages/sort/sort_detail?id=" + this.data.id,
-            imageUrl: "../images/shareImage.png",
-        }
+    goCreateGroupSubject: function () {
+        wx.navigateTo({
+            url: "/pages/group/group"
+        })
     },
-    showShareView: function () {
-        this.shareView.toggleDialog(true);
+    exportGroup: function () {
+        util.request(api.groupExprot, {
+            subjectId: this.data.subjectId
+        }).then(function (res) {
+            wx.setClipboardData({
+                data: res.data,
+                success(res) {
+
+                }
+            })
+        });
+    },
+
+    onShareAppMessage: function (res) {
+        return {
+            title: "一起来分组吧",
+            path: "/pages/group/group_detail?subjectId=" + this.data.subjectId,
+            imageUrl: "../../images/shareImage.png",
+        }
     }
 })

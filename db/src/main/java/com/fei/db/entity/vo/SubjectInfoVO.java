@@ -23,4 +23,6 @@ public class SubjectInfoVO extends SujectInfo {
     private Boolean isJoin = false;
     private Integer joinSum;
 
+    private Boolean realName;//实名
+
 }

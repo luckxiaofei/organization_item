@@ -14,6 +14,7 @@
         </view>
         <view class="nn_type" wx:if="{{!isJoin}}">
             <button class="btn_type" bindtap="join">参与排序</button>
+            <van-dialog id="van-dialog" />
         </view>
     </view>
     <scroll-view scroll-y style="height:300px;margin-left:10px;position:fixed; ">
@@ -22,13 +23,12 @@
             <van-divider contentPosition="center">分组{{groupNumber}}</van-divider>
             <scroll-view scroll-x>
                 <view class='hor'>
-                    <block wx:for="{{ groupDetailList }}" wx:for-item="groupDetail">
+                    <block wx:for="{{ groupDetailList }}" wx:key="*this" wx:for-item="groupDetail">
                         <view>
-
                             <image wx:if="{{groupDetail.userIamgeUrl==null||groupDetail.userIamgeUrl==''}}" class="round_icon3" src="/images/people.png"/>
                             <image wx:if="{{groupDetail.userIamgeUrl!=null&&groupDetail.userIamgeUrl!=''}}" class="round_icon3" src="{{groupDetail.userIamgeUrl}}"/>
-                            <view wx:if="{{groupDetail.userName==null||groupDetail.userName==''}}" class="ts_type">待分组</view>
-                            <view wx:if="{{groupDetail.userName!=null&&groupDetail.userName!=''}}" class="ts_type">{{groupDetail.userName}}</view>
+                            <view wx:if="{{groupDetail.userName==null||groupDetail.userName==''}}" class="van-ellipsis ts_type">待分组</view>
+                            <view wx:if="{{groupDetail.userName!=null&&groupDetail.userName!=''}}" class="van-ellipsis ts_type">{{groupDetail.userName}}</view>
                         </view>
                     </block>
                 </view>
@@ -40,8 +40,8 @@
 
     <van-goods-action>
         <van-goods-action-icon icon="wap-home-o" text="首页" bind:click="goHome"/>
-        <van-goods-action-icon icon="records" text="导出" bind:click="exportSort"/>
-        <van-goods-action-icon icon="add-o" text="创建" bind:click="addSort"/>
-        <van-goods-action-button color="#FFD700" text="分享排序" bind:click="onShareAppMessage"/>
+        <van-goods-action-icon icon="records" text="导出" bind:click="exportGroup"/>
+        <van-goods-action-icon icon="add-o" text="创建" bind:click="goCreateGroupSubject"/>
+        <van-goods-action-button color="#FFD700" text="分享排序" open-type='share'/>
     </van-goods-action>
 </view>

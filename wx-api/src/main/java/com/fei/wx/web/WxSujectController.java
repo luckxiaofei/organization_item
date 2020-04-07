@@ -51,6 +51,14 @@ public class WxSujectController {
         }
     }
 
+    @GetMapping("group/groupExprot")
+    public Object groupExprot(@LoginUser Integer userId, Integer subjectId) {
+        if (userId == null) {
+            return ResponseUtil.unlogin();
+        }
+        return ResponseUtil.ok(subjectService.groupExprot(subjectId));
+    }
+
     @GetMapping("sort/addSubject")
     @ResponseBody
     public Object addSortSubject(@LoginUser Integer userId, SujectInfo sujectInfo) {
@@ -68,7 +76,7 @@ public class WxSujectController {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
-        return ResponseUtil.ok(subjectService.getSubjectDetail(subjectId,userId));
+        return ResponseUtil.ok(subjectService.getSubjectDetail(subjectId, userId));
     }
 
     @GetMapping("/sort/add/detail")
@@ -82,6 +90,14 @@ public class WxSujectController {
             e.printStackTrace();
             return ResponseUtil.fail(e.getMessage());
         }
+    }
+
+    @GetMapping("sort/sortExprot")
+    public Object sortExprot(@LoginUser Integer userId, Integer subjectId) {
+        if (userId == null) {
+            return ResponseUtil.unlogin();
+        }
+        return ResponseUtil.ok(subjectService.sortExprot(subjectId));
     }
 
 

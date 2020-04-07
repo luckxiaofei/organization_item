@@ -12,12 +12,11 @@ Page({
      * 页面的初始数据
      */
     data: {
-        maskFlag: true,
         subject: '',
         peopleNumber: 1,
+        groupNumber: 1,
         needName: false,
         userInfo: {},
-        openId: ""
     },
 
     /**
@@ -67,56 +66,15 @@ Page({
             })
             return;
         }
-        if (parseInt(this.data.gnum) > parseInt(this.data.pnum)) {
-            wx.showToast({
-                title: '参与人数不能大于总分组数！',
-                icon: 'none'
-            })
-            return;
-        }
 
-        var that = this;
-        wx.request({
-            url: 'http://192.168.51.17:8080/saveGroup', //仅为示例，并非真实的接口地址
-            method: "POST",
-            data: {
-                subject: this.data.subject,
-                peopleNumber: this.data.peopleNumber,
-                groupNumber: this.data.groupNumber,
-                needName: this.data.needName
-            },
-            header: {
-                "Content-Type": "application/json;charsetset=UTF-8"// 默认值
-            },
-            success: function (res) {
-                if (res.data.status == 1) {
-                    console.info("======发布id:" + res.data.data.group.id);
-                    var openid = "";
-                    wx.getStorage({
-                        key: 'openid',
-                        success(res) {
-                            console.log(res.data)
-                            that.setData({
-                                openId: res.data
-                            })
-                        }
-                    })
-                    console.info("--0-00-0-0-0-0-0-0-0======" + that.data.openId)
-                    wx.navigateTo({
-                        url: '../group/group_detail?id=' + res.data.data.group.id + "&new=true&openId=" + that.data.openId
-                    })
-                } else {
-                    wx.showToast({
-                        title: '发布失败，请重试',
-                        icon: 'none'
-                    })
-                }
-                console.log(res.data)
-            }
-        })
+        let that = this;
+        util.request(api.addSortSubject, {
+            name: this.data.subject,
+            peopleSum: this.data.peopleNumber,
+            needName: this.data.needName
+        }).then(function (res) {
+            util.navigateTo("/pages/sort/sort_detail?subjectId=" + res.data)
+        });
     },
-    isInteger: function (obj) {
-        return Math.floor(obj) === obj
-    }
 
 })

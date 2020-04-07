@@ -1,5 +1,7 @@
 package com.fei.db.entity.po;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -26,6 +28,7 @@ public class SysUser {
     /**
      * 生日
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd" )
     private Date birthday;
 
     /**

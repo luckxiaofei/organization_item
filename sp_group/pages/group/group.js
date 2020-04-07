@@ -88,13 +88,7 @@ Page({
             groupSum: this.data.groupNumber,
             needName: this.data.needName
         }).then(function (res) {
-            if (res.errno === 0) {
-                util.navigateTo("/pages/group/group_detail?subjectId="+res.data)
-            } else if (res.errno === 501) {
-                util.goLogin();
-            } else if (res.errno === -1) {
-               util.showErrorToast()
-            }
+            util.navigateTo("/pages/group/group_detail?subjectId="+res.data)
         });
     },
 

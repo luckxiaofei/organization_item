@@ -1,7 +1,10 @@
 package com.fei.wx.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.aliyun.oss.common.utils.DateUtil;
 import com.fei.db.dao.GroupDetailMapper;
 import com.fei.db.dao.SortDetailMapper;
 import com.fei.db.dao.SujectInfoMapper;
@@ -14,10 +17,13 @@ import com.fei.db.entity.vo.SubjectInfoVO;
 import com.fei.db.util.Collections3;
 import com.fei.wx.util.BussinessException;
 import com.google.common.collect.Lists;
+import com.qcloud.cos.utils.DateUtils;
+import jodd.util.StringUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.*;
@@ -58,7 +64,7 @@ public class SubjectService {
                     groupDetailMapper.insertSelective(groupDetail);
                 }
             }
-            int surplusSum = sujectInfo.getPeopleSum() / sujectInfo.getGroupSum();
+            int surplusSum = sujectInfo.getPeopleSum() % sujectInfo.getGroupSum();
             if (surplusSum > 0) {
                 for (int i = 0; i < surplusSum; i++) {
                     GroupDetail groupDetail = new GroupDetail();
@@ -86,33 +92,46 @@ public class SubjectService {
      */
     public SubjectInfoVO getSubjectDetail(Integer subjectId, Integer userId) {
         SubjectInfoVO subjectInfoVO = sujectInfoMapper.getSubjectInfoVO(subjectId);
+        //判断是否参加
         boolean isJoin = isJoin(subjectId, userId);
         subjectInfoVO.setIsJoin(isJoin);
-        if (isJoin && subjectInfoVO.getType().equals(0l)) {
-            SortDetail sortDetail = subjectInfoVO.getSortDetailList().stream().filter(p -> p.getUserId().equals(userId)).findFirst().get();
-            subjectInfoVO.setSortNumber(sortDetail.getSort());
-            subjectInfoVO.setJoinSum(Optional.ofNullable(subjectInfoVO.getSortDetailList().size()).orElse(0));
-        } else if (isJoin && subjectInfoVO.getType().equals(1l)) {
-            GroupDetail groupDetail = subjectInfoVO.getGroupDetailList().stream().filter(p -> p.getUserId().equals(userId)).findFirst().get();
-            subjectInfoVO.setGroupNumber(groupDetail.getGroupNumber());
+        //判断是否实名
+        SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
+        if (StringUtil.isBlank(sysUser.getUserName())) {
+            subjectInfoVO.setRealName(false);
+        } else {
+            subjectInfoVO.setRealName(true);
         }
+        if (subjectInfoVO.getType().equals(0l)) {
+            if (isJoin) {
+                SortDetail sortDetail = subjectInfoVO.getSortDetailList().stream().filter(p -> p.getUserId().equals(userId)).findFirst().get();
+                subjectInfoVO.setSortNumber(sortDetail.getSort());
+            }
+            subjectInfoVO.setJoinSum(Optional.ofNullable(subjectInfoVO.getSortDetailList().size()).orElse(0));
+        } else if (subjectInfoVO.getType().equals(1l)) {
+            if (isJoin) {
+                GroupDetail groupDetail = subjectInfoVO.getGroupDetailList().stream().filter(p -> p.getUserId().equals(userId)).findFirst().get();
+                subjectInfoVO.setGroupNumber(groupDetail.getGroupNumber());
+            }
+            List<GroupDetail> groupDetails = subjectInfoVO.getGroupDetailList().stream().filter(p -> p.getUserId() != null && p.getUserId() > 0).collect(Collectors.toList());
+            subjectInfoVO.setJoinSum(Optional.ofNullable(groupDetails.size()).orElse(0));
+        }
+
+        //组装 分组数据
         if (Collections3.isNotEmpty(subjectInfoVO.getGroupDetailList())) {
             Map<Integer, List<GroupDetail>> listMap = subjectInfoVO.getGroupDetailList().stream().sorted(new Comparator<GroupDetail>() {
                 @Override
                 public int compare(GroupDetail o1, GroupDetail o2) {
                     if (o1.getUserId() > o2.getUserId()) {
-                        return -1;
-                    } else if (o1.getUserId() < o2.getUserId()) {
                         return 1;
+                    } else if (o1.getUserId() < o2.getUserId()) {
+                        return -1;
                     } else {
                         return 0;
                     }
                 }
             }).collect(Collectors.groupingBy(GroupDetail::getGroupNumber));
             subjectInfoVO.setGroupDetailMap(listMap);
-            subjectInfoVO.setGroupDetailList(Collections.EMPTY_LIST);
-            List<GroupDetail> groupDetails = subjectInfoVO.getGroupDetailList().stream().filter(p -> p.getUserId() != null && p.getUserId() > 0).collect(Collectors.toList());
-            subjectInfoVO.setJoinSum(Optional.ofNullable(groupDetails.size()).orElse(0));
             subjectInfoVO.setGroupMaxNumber(0);
             for (Integer key : listMap.keySet()) {
                 int size = listMap.get(key).size();
@@ -120,7 +139,26 @@ public class SubjectService {
                     subjectInfoVO.setGroupMaxNumber(size);
                 }
             }
+            subjectInfoVO.setGroupDetailList(Collections.EMPTY_LIST);
         }
+
+        //排序
+        if (Collections3.isNotEmpty(subjectInfoVO.getSortDetailList())) {
+            List<SortDetail> collect = subjectInfoVO.getSortDetailList().stream().sorted(new Comparator<SortDetail>() {
+                @Override
+                public int compare(SortDetail o1, SortDetail o2) {
+                    if (o1.getSort() > o2.getSort()) {
+                        return 1;
+                    } else if (o1.getSort() < o2.getSort()) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+            }).collect(Collectors.toList());
+            subjectInfoVO.setSortDetailList(collect);
+        }
+
         return subjectInfoVO;
     }
 
@@ -168,11 +206,16 @@ public class SubjectService {
                 sortList.add(finalI);
             }
         }
-        int random = new Random().nextInt(peopleSum);
+        int random = new Random().nextInt(sortList.size());
         SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
         SortDetail sortDetail = new SortDetail();
         sortDetail.setSujectInfoId(subjectId);
         sortDetail.setUserId(userId);
+        if (subjectInfoVO.getNeedName()) {
+            sortDetail.setUserName(sysUser.getNickname());
+        } else {
+            sortDetail.setUserName(sysUser.getUserName());
+        }
         sortDetail.setUserIamgeUrl(sysUser.getAvatar());
         sortDetail.setSort(sortList.get(random));
         sortDetail.setAddTime(new Date());
@@ -189,14 +232,15 @@ public class SubjectService {
             logger.info(">>>>已参加,不能重复参加");
             throw new BussinessException("不能重复参加");
         }
+        //没有分配的坑位
+        List<GroupDetail> groupDetails = groupDetailList.stream().filter(p -> p.getUserId() == null || p.getUserId() == 0).collect(Collectors.toList());
+        Integer size = Optional.ofNullable(groupDetails.size()).orElse(0);
         int peopleSum = subjectInfoVO.getPeopleSum();
-        Integer size = Optional.ofNullable(groupDetailList.size()).orElse(0);
-        if (size == peopleSum) {
+        if (size == 0) {
             logger.info(">>>>排序已满员");
             throw new BussinessException("已满员");
         }
-        //没有分配的坑位
-        List<GroupDetail> groupDetails = groupDetailList.stream().filter(p -> p.getUserId() == null || p.getUserId() == 0).collect(Collectors.toList());
+
         int random = new Random().nextInt(groupDetails.size());
         GroupDetail groupDetail = groupDetails.get(random);
 
@@ -211,6 +255,32 @@ public class SubjectService {
         }
         groupDetail.setUpdateTime(new Date());
         return groupDetailMapper.updateByPrimaryKeySelective(groupDetail);
+    }
+
+    public String groupExprot(Integer subjectId) {
+        //【hhhh】
+        //【总人数 9】
+        //【分组组数 3】
+        //【未参与人数 8】
+        //【分组 1：】
+        //【分组 2：】
+        //【分组 3：陈小飞 】
+        SubjectInfoVO vo = sujectInfoMapper.getSubjectInfoVO(subjectId);
+        int size = vo.getGroupDetailList().stream().filter(p -> p.getUserId().equals(0)).collect(Collectors.toList()).size();
+        StringBuffer builder = new StringBuffer();
+        builder.append("【").append(vo.getName()).append("】").append("\n");
+        builder.append("【").append("总人数").append(vo.getPeopleSum()).append("】").append("\n");
+        builder.append("【").append("分组组数").append(vo.getGroupSum()).append("】").append("\n");
+        builder.append("【").append("未参与人数").append(size).append("】").append("\n");
+        for (int i = 0; i < vo.getGroupSum(); i++) {
+            int groupNumber = i + 1;
+            String groupUserName = vo.getGroupDetailList().stream()
+                    .filter(p -> p.getGroupNumber().equals(groupNumber))
+                    .filter(p -> StringUtil.isNotBlank(p.getUserName()))
+                    .map(GroupDetail::getUserName).collect(Collectors.joining(","));
+            builder.append("【").append("分组").append(groupNumber).append(": ").append(groupUserName).append("】").append("\n");
+        }
+        return builder.toString();
     }
 
 
@@ -240,6 +310,39 @@ public class SubjectService {
         example.createCriteria().andIn("id", subjectIdList);
         List<SujectInfo> sujectInfoList = sujectInfoMapper.selectByExample(example);
         return sujectInfoList;
+    }
+
+    public String sortExprot(Integer subjectId) {
+        SubjectInfoVO vo = sujectInfoMapper.getSubjectInfoVO(subjectId);
+        List<SortDetail> sortDetailList = vo.getSortDetailList();
+        vo.setJoinSum(Optional.ofNullable(sortDetailList.size()).orElse(0));
+        //【dddd】
+        //【1/2 张卡片被抽取】
+        //【陈小飞  04-07 00:58:43 第 2 位】
+        StringBuffer builder = new StringBuffer();
+        builder.append("【").append(vo.getName()).append("】").append("\n");
+        builder.append("【").append(vo.getJoinSum()).append("/").append(vo.getPeopleSum()).append("张卡片被抽取").append("】").append("\n");
+        sortDetailList = sortDetailList.stream().sorted(new Comparator<SortDetail>() {
+            @Override
+            public int compare(SortDetail o1, SortDetail o2) {
+                if (o1.getSort() > o2.getSort()) {
+                    return 1;
+                } else if (o1.getSort() < o2.getSort()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        }).collect(Collectors.toList());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for (SortDetail sortDetail : sortDetailList) {
+            builder.append("【").append(sortDetail.getUserName())
+                    .append(" ")
+                    .append(dateFormat.format(sortDetail.getAddTime()))
+                    .append(" ")
+                    .append("第").append(sortDetail.getSort()).append("名】").append("\n");
+        }
+        return builder.toString();
     }
 
 }
