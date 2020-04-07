@@ -12,7 +12,8 @@ module.exports = {
     addGroupSubject: WxApiRoot + 'group/addSubject',//新建
     getGroupDetail: WxApiRoot + 'group/detail',//详情
     groupAddDetail: WxApiRoot + 'group/add/detail',//参加
-
+    groupAddDetail: WxApiRoot + 'group/add/detail',//参加
+    groupExprot: WxApiRoot + 'group/groupExprot',//导出
     addSortSubject: WxApiRoot + 'sort/addSubject',//新建
     getSortDetail: WxApiRoot + 'sort/detail',//详情
     sortAddDetail: WxApiRoot + 'sort/add/detail',//参加

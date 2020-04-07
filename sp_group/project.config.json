@@ -75,7 +75,7 @@
 					"id": 2,
 					"name": "pages/group/group_detail",
 					"pathName": "pages/group/group_detail",
-					"query": "subjectId= 9",
+					"query": "subjectId=12",
 					"scene": null
 				},
 				{
@@ -89,6 +89,13 @@
 					"id": -1,
 					"name": "pages/sort/sort_detail",
 					"pathName": "pages/sort/sort_detail",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/group/group",
+					"pathName": "pages/group/group",
 					"query": "",
 					"scene": null
 				}

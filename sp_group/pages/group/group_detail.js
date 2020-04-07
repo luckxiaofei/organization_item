@@ -2,6 +2,7 @@ const app = getApp()
 var util = require('../../utils/util.js');
 var api = require('../../config/api.js');
 var user = require('../../utils/user.js');
+import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 Page({
 
@@ -16,6 +17,7 @@ Page({
         groupNumber: 0,
         peopleSum: 9,
         joinSum: 0,
+        needName: false,
         groupDetailMap: {}
     },
 
@@ -23,6 +25,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        console.log(options)
         var that = this;
         let subjectId = options.subjectId;
         that.setData({
@@ -38,33 +41,43 @@ Page({
                 })
             }
         })
+        that.getBaseInfo()
+    },
 
+    getBaseInfo: function () {
+        var that = this;
         util.request(api.getGroupDetail, {
-            subjectId: subjectId,
+            subjectId: that.data.subjectId,
         }).then(function (res) {
             let peopleSum = res.data.peopleSum;
             that.setData({
                 subjectName: res.data.name,
                 peopleSum: peopleSum,
-                joinSum: res.data.groupDetailList.length,
+                joinSum: res.data.joinSum,
+                needName: res.data.needName,
                 groupDetailMap: res.data.groupDetailMap,
                 isJoin: res.data.isJoin,
                 groupNumber: res.data.groupNumber,
-                groupMaxNumber: res.data.groupMaxNumber
+                groupMaxNumber: res.data.groupMaxNumber,
             })
         });
-
-        console.log(options)
     },
 
     //参与
     join: function (res) {
-
-
+        var that = this;
+        if (that.needName) {
+            Dialog.alert({
+                message: '>>前往完善姓名'
+            }).then(() => {
+                // on close
+            });
+        }
         util.request(api.groupAddDetail, {
             subjectId: this.data.subjectId
         }).then(function (res) {
             util.showToast("参与成功");
+            that.getBaseInfo()
         });
     },
     goHome: function () {
@@ -72,7 +85,19 @@ Page({
             url: "/pages/index/index"
         })
     },
-
+    goCreateGroupSubject: function () {
+        wx.navigateTo({
+            url: "/pages/group/group"
+        })
+    },
+    exportGroup: function () {
+        util.request(api.groupExprot, {
+            subjectId: this.data.subjectId
+        }).then(function (res) {
+            util.showToast("参与成功");
+            that.getBaseInfo()
+        });
+    },
 
     /**
      * 用户点击右上角分享
