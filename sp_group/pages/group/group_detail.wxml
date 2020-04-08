@@ -13,7 +13,7 @@
             <text>{{joinSum}}/{{peopleSum}}张卡片已被抽取</text>
         </view>
         <view class="nn_type" wx:if="{{!isJoin}}">
-            <button class="btn_type" bindtap="join">参与排序</button>
+            <button class="btn_type" bindtap="join">参与分组</button>
             <van-dialog id="van-dialog" />
         </view>
     </view>

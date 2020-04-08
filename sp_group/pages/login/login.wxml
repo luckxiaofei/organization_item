@@ -1,7 +1,6 @@
-<view class="container">
-  <view class="form-box">
-
-    <button type="primary" open-type="getUserInfo" class="login-btn" bindgetuserinfo="wxLogin">微信直接登录</button>
-
-  </view>
+<!--index.wxml-->
+<view class="temp">
+</view>
+<view class="item">
+  <van-button round color="#FFD700" type="primary" size="large" open-type="getUserInfo" bindgetuserinfo="wxLogin">微信直接登录</van-button>
 </view>

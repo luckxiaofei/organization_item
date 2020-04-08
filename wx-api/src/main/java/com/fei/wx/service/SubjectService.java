@@ -4,6 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
+import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import com.aliyun.oss.common.utils.DateUtil;
 import com.fei.db.dao.GroupDetailMapper;
 import com.fei.db.dao.SortDetailMapper;
@@ -19,6 +22,7 @@ import com.fei.wx.util.BussinessException;
 import com.google.common.collect.Lists;
 import com.qcloud.cos.utils.DateUtils;
 import jodd.util.StringUtil;
+import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
@@ -41,6 +45,8 @@ public class SubjectService {
     private SortDetailMapper sortDetailMapper;
     @Autowired
     private SysUserMapper sysUserMapper;
+    @Autowired
+    WxMaService wxMaService;
 
 
     public int addSubject(SujectInfo sujectInfo) {
@@ -226,6 +232,41 @@ public class SubjectService {
         return res;
     }
 
+    //发送订阅消息
+    public void sendMsg(Integer subjectId) {
+        SubjectInfoVO infoVO = sujectInfoMapper.getSubjectInfoVO(subjectId);
+        List<SortDetail> details = infoVO.getSortDetailList();
+        List<GroupDetail> groupDetailList = infoVO.getGroupDetailList();
+        if ((Collections3.isNotEmpty(details) && details.size() == infoVO.getPeopleSum())
+                || (Collections3.isNotEmpty(groupDetailList) && groupDetailList.size() == infoVO.getPeopleSum())) {
+            List<Integer> userIdList = details.stream().map(SortDetail::getUserId).collect(Collectors.toList());
+            List<Integer> userIdList2 = groupDetailList.stream().map(GroupDetail::getUserId).collect(Collectors.toList());
+            userIdList.addAll(userIdList2);
+            for (Integer so : userIdList) {
+                SysUser sysUser = sysUserMapper.selectByPrimaryKey(so);
+                WxMaSubscribeMessage wxMaSubscribeMessage = new WxMaSubscribeMessage();
+                wxMaSubscribeMessage.setToUser(sysUser.getWeixinOpenid());
+                wxMaSubscribeMessage.setTemplateId("xB8PAlZ9Qc1-USZFaKV2tKBM9ak6tTe4GISXvwSuFJc");
+                if (infoVO.getType().equals(0l)) {
+                    wxMaSubscribeMessage.setPage("/pages/group/group?subjectId=" + infoVO.getId());
+                } else {
+                    wxMaSubscribeMessage.setPage("/pages/sort/sort_detail?subjectId=" + infoVO.getId());
+                }
+                ArrayList<WxMaSubscribeMessage.Data> dataArrayList = Lists.newArrayList();
+                dataArrayList.add(new WxMaSubscribeMessage.Data("thing1", infoVO.getName()));
+                dataArrayList.add(new WxMaSubscribeMessage.Data("thing2", "已全员到齐"));
+                wxMaSubscribeMessage.setData(dataArrayList);
+                wxMaSubscribeMessage.setMiniprogramState(WxMaConstants.MiniprogramState.DEVELOPER);
+                try {
+                    wxMaService.getMsgService().sendSubscribeMsg(wxMaSubscribeMessage);
+                } catch (WxErrorException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+
     public int addGroupDetail(Integer subjectId, Integer userId) throws BussinessException {
         SubjectInfoVO subjectInfoVO = sujectInfoMapper.getSubjectInfoVO(subjectId);
         List<GroupDetail> groupDetailList = subjectInfoVO.getGroupDetailList();
@@ -287,16 +328,16 @@ public class SubjectService {
 
     public List<SubjectInfoVO> getMyCreateSubject(Integer userId) {
         Example example = new Example(SujectInfo.class);
-        example.createCriteria().andEqualTo("addUserId", userId).andEqualTo("deleted",false);
+        example.createCriteria().andEqualTo("addUserId", userId).andEqualTo("deleted", false);
         List<SujectInfo> sujectInfoList = sujectInfoMapper.selectByExample(example);
 
         List<SubjectInfoVO> subjectInfoVOList = sujectInfoList.stream().map(p -> {
             SubjectInfoVO subjectInfoVO = new SubjectInfoVO();
             BeanUtils.copyProperties(p, subjectInfoVO);
             if (p.getType().equals(0l)) {
-                subjectInfoVO.setDetailUrl("/pages/group/group?subjectId="+p.getId());
+                subjectInfoVO.setDetailUrl("/pages/group/group?subjectId=" + p.getId());
             } else {
-                subjectInfoVO.setDetailUrl("/pages/sort/sort_detail?subjectId="+p.getId());
+                subjectInfoVO.setDetailUrl("/pages/sort/sort_detail?subjectId=" + p.getId());
             }
             return subjectInfoVO;
         }).collect(Collectors.toList());
@@ -319,16 +360,16 @@ public class SubjectService {
         subjectIdList.addAll(sortSubIdList);
 
         Example example = new Example(SujectInfo.class);
-        example.createCriteria().andIn("id", subjectIdList).andEqualTo("deleted",false);
+        example.createCriteria().andIn("id", subjectIdList).andEqualTo("deleted", false);
         List<SujectInfo> sujectInfoList = sujectInfoMapper.selectByExample(example);
 
         List<SubjectInfoVO> subjectInfoVOList = sujectInfoList.stream().map(p -> {
             SubjectInfoVO subjectInfoVO = new SubjectInfoVO();
             BeanUtils.copyProperties(p, subjectInfoVO);
             if (p.getType().equals(0l)) {
-                subjectInfoVO.setDetailUrl("/pages/group/group?subjectId="+p.getId());
+                subjectInfoVO.setDetailUrl("/pages/group/group?subjectId=" + p.getId());
             } else {
-                subjectInfoVO.setDetailUrl("/pages/sort/sort_detail?subjectId="+p.getId());
+                subjectInfoVO.setDetailUrl("/pages/sort/sort_detail?subjectId=" + p.getId());
             }
             return subjectInfoVO;
         }).collect(Collectors.toList());

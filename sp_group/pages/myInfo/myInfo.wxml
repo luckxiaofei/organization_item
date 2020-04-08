@@ -1,39 +1,17 @@
 <van-cell-group>
-    <van-field
-            value="{{ userName }}"
-            clearable
-            label="姓名"
-            placeholder="请输入姓名"
-            bind:change="onChangeName"
-    />
+  <van-field value="{{ userName }}" clearable label="姓名" placeholder="请输入姓名" bind:change="onChangeName" />
 
-    <van-field
-            value="{{ birthday }}"
-            clearable
-            label="生日"
-            placeholder="请输入用生日"
-            bind:focus="showPopup"
-
-    />
+  <van-field value="{{ birthday }}" clearable label="生日" placeholder="请输入用生日" bind:focus="showPopup" />
 </van-cell-group>
 
-<view class="but">
-    <van-button  round color="#FFD700" size="large" bind:click="updateUserInfo">立即修改</van-button>
-</view>
+
+<van-cell>
+  <van-button round color="#FFD700" size="large" bind:click="updateUserInfo">立即修改</van-button>
+</van-cell>
 
 
 
-<van-popup
-        show="{{ show }}"
-        position="bottom"
-        custom-style="height: 50%;"
-        bind:close="onClose"
->
-    <van-datetime-picker
-            type="date"
-            value="{{ currentDate }}"
-            bind:confirm="confirm"
-            min-date="{{ minDate }}"
-            formatter="{{ formatter }}"
-    />
+
+<van-popup show="{{ show }}" position="bottom" custom-style="height: 50%;" bind:close="onClose">
+  <van-datetime-picker type="date" value="{{ currentDate }}" bind:confirm="confirm" min-date="{{ minDate }}" formatter="{{ formatter }}" />
 </van-popup>

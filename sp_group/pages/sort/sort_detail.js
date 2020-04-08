@@ -79,8 +79,24 @@ Page({
             }).then(function (res) {
                 util.showToast("参与成功");
                 that.getBaseInfo()
+                wx.requestSubscribeMessage({
+                    tmplIds: ['xB8PAlZ9Qc1-USZFaKV2tKBM9ak6tTe4GISXvwSuFJc'],
+                    success (res) {
+                        that.sendMsg()
+                        console.info('订阅成功');
+                    }
+                })
+                that.sendMsg()
             });
         }
+    },
+    sendMsg: function () {
+        var that = this;
+        util.request(api.sendMsg, {
+            subjectId: that.data.subjectId
+        }).then(function (res) {
+
+        });
     },
     goHome: function () {
         wx.switchTab({
@@ -109,7 +125,7 @@ Page({
         return {
             title: "一起来排序吧",
             path: "/pages/sort/sort_detail?subjectId=" + this.data.subjectId,
-            imageUrl: "../../images/shareImage.png",
+            imageUrl: "../../images/sort.jpg",
         }
     }
 })

@@ -125,4 +125,10 @@ public class WxSujectController {
         int res = subjectService.deleteSubject(subjectId);
         return ResponseUtil.ok(res);
     }
+
+    @GetMapping("sendMsg")
+    public Object sendMsg(Integer subjectId) {
+        subjectService.sendMsg(subjectId);
+        return ResponseUtil.ok();
+    }
 }

@@ -1,9 +1,9 @@
 <!--index.wxml-->
-<view class="container">
-    <view class="groupping">
-        <van-button round color="#FFD700" type="primary" size="large" bindtap="goGoup">来分组</van-button>
-    </view>
-    <view class="sorting">
-        <van-button round color="#FFD700" type="primary" size="large" bindtap="goSort">排顺序</van-button>
-    </view>
+<view class="temp">
+</view>
+<view class="item">
+  <van-button round color="#FFD700" type="primary" size="large" bindtap="goGoup">来分组</van-button>
+</view>
+<view class="item">
+  <van-button round color="#FFD700" type="primary" size="large" bindtap="goSort">排顺序</van-button>
 </view>

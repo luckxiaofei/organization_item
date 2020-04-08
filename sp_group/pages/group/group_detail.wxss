@@ -1,14 +1,13 @@
-.detail_type{
-
+.detail_type {
   width: 95%;
-  height: 160px;
-  background-color: #FFD700;
-  border-radius:30rpx;
+  height: 170px;
+  background-color: #ffd700;
+  border-radius: 30rpx;
   margin: 0 auto;
   margin-top: 20rpx;
-
 }
-.round_icon{
+
+.round_icon {
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -19,14 +18,14 @@
   margin-left: 30rpx;
 }
 
-.round_icon2{
+.round_icon2 {
   width: 50rpx;
   height: 50rpx;
   border-radius: 50%;
   margin-right: 20rpx;
 }
 
-.round_icon3{
+.round_icon3 {
   width: 50rpx;
   height: 50rpx;
   border-radius: 50%;
@@ -34,74 +33,83 @@
   margin-left: 30rpx;
 }
 
-.ts_type{
+.ts_type {
   color: rgb(146, 156, 137);
   font-size: 12px;
   margin-top: 18px;
-  margin-left:10px;
+  margin-left: 10px;
 }
-.zt_type{
+
+.zt_type {
   margin-top: 20px;
   font-family: STHeiti;
-  font-weight:bold;
-  text-align: center
+  font-weight: bold;
+  text-align: center;
 }
-.jd_type{
+
+.jd_type {
   margin-top: 3px;
   font-size: 12px;
   color: white;
-  text-align: center
+  text-align: center;
 }
-.nn_type{
+
+.nn_type {
   margin-top: -5px;
+  margin-left: 50rpx;
+  margin-right: 50rpx;
   font-size: 22px;
   text-align: center;
-
 }
-.btn_type{
-  border-radius:17px;
-  background-color:  black;
-  color: #FFD700;
+
+.btn_type {
+  border-radius: 17px;
+  background-color: black;
+  color: #ffd700;
   margin-top: 20rpx;
 }
-.person_type{
-  display:flex;
-  margin-bottom: 10px
+
+.person_type {
+  display: flex;
+  margin-bottom: 10px;
 }
-.p_info_type{
+
+.p_info_type {
   margin-right: 30px;
   text-align: center;
 }
-.p_txt_type{
-  font-size: 11px
+
+.p_txt_type {
+  font-size: 11px;
 }
-.botton_view_type{
-  display:flex;
+
+.botton_view_type {
+  display: flex;
   background-color: rgba(241, 247, 243, 0.952);
   height: 35px;
-  position:fixed;
-  bottom:0;
+  position: fixed;
+  bottom: 0;
   width: 750rpx;
 }
-.s_btn_type{
-  width:  90px;
+
+.s_btn_type {
+  width: 90px;
   text-align: center;
   line-height: 60rpx;
   margin-right: 2px;
   font-size: 11px;
-  background-color:  rgb(223, 221, 143);
-
+  background-color: rgb(223, 221, 143);
 }
-.m_btn_type{
+
+.m_btn_type {
   text-align: center;
-  width:  100px;
+  width: 100px;
   margin-right: 2px;
   font-size: 16px;
-  background-color:  rgb(243, 187, 82);
-
+  background-color: rgb(243, 187, 82);
 }
 
-.date{
+.date {
   font-size: 14px;
   color: #888088;
 }
@@ -120,7 +128,6 @@
   margin-top: 10px;
   float: right;
   font-size: 14px;
-
 }
 
 /* .item1 {
@@ -131,12 +138,11 @@
 
 */
 
-.noJoin{
+.noJoin {
   text-align: center;
   margin-top: 150rpx;
   color: #888088;
 }
-
 
 .hor {
   display: flex;

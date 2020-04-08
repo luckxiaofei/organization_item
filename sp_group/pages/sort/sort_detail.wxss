@@ -2,7 +2,7 @@
 .detail_type{
 
   width: 95%;
-  height: 160px;
+  height: 170px;
   background-color: #FFD700;
   border-radius:30rpx;
   margin: 0 auto;
@@ -47,6 +47,8 @@
 }
 .nn_type{
   margin-top: -5px;
+  margin-left: 50rpx;
+  margin-right: 50rpx;
   font-size: 22px;
   text-align: center;
 
