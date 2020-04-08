@@ -100,7 +100,7 @@ public class SubjectService {
     public SubjectInfoVO getSubjectDetail(Integer subjectId, Integer userId) {
         SubjectInfoVO subjectInfoVO = sujectInfoMapper.getSubjectInfoVO(subjectId);
         //判断是否参加
-        boolean isJoin = isJoin(subjectId, userId);
+        boolean isJoin = isJoin(subjectId, userId, subjectInfoVO.getType());
         subjectInfoVO.setIsJoin(isJoin);
         //判断是否实名
         SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
@@ -174,20 +174,21 @@ public class SubjectService {
      *
      * @param subjectId
      * @param userId
+     * @param type
      * @return
      */
-    private boolean isJoin(Integer subjectId, Integer userId) {
+    private boolean isJoin(Integer subjectId, Integer userId, Long type) {
         Example exampleGroupDetail = new Example(GroupDetail.class);
         exampleGroupDetail.createCriteria().andEqualTo("userId", userId).andEqualTo("sujectInfoId", subjectId);
         List<GroupDetail> groupDetailList = groupDetailMapper.selectByExample(exampleGroupDetail);
-        if (Collections3.isNotEmpty(groupDetailList)) {
+        if (Collections3.isNotEmpty(groupDetailList) && type.equals(1l)) {
             return true;
         }
 
         Example exampleSortDetail = new Example(SortDetail.class);
         exampleSortDetail.createCriteria().andEqualTo("userId", userId).andEqualTo("sujectInfoId", subjectId);
         List<SortDetail> sortDetailList = sortDetailMapper.selectByExample(exampleSortDetail);
-        if (Collections3.isNotEmpty(sortDetailList)) {
+        if (Collections3.isNotEmpty(sortDetailList) && type.equals(0l)) {
             return true;
         }
         return false;
@@ -340,6 +341,17 @@ public class SubjectService {
                 subjectInfoVO.setDetailUrl("/pages/sort/sort_detail?subjectId=" + p.getId());
             }
             return subjectInfoVO;
+        }).sorted(new Comparator<SubjectInfoVO>() {
+            @Override
+            public int compare(SubjectInfoVO o1, SubjectInfoVO o2) {
+                if (o1.getAddTime().compareTo(o2.getAddTime()) > 0) {
+                    return -1;
+                } else if (o1.getAddTime().compareTo(o2.getAddTime()) < 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
         }).collect(Collectors.toList());
         return subjectInfoVOList;
     }
@@ -372,6 +384,17 @@ public class SubjectService {
                 subjectInfoVO.setDetailUrl("/pages/sort/sort_detail?subjectId=" + p.getId());
             }
             return subjectInfoVO;
+        }).sorted(new Comparator<SubjectInfoVO>() {
+            @Override
+            public int compare(SubjectInfoVO o1, SubjectInfoVO o2) {
+                if (o1.getAddTime().compareTo(o2.getAddTime()) > 0) {
+                    return -1;
+                } else if (o1.getAddTime().compareTo(o2.getAddTime()) < 0) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
         }).collect(Collectors.toList());
 
         return subjectInfoVOList;

@@ -3,6 +3,7 @@ package com.fei.wx.service;
 import com.fei.db.dao.SysUserMapper;
 import com.fei.db.entity.po.SysUser;
 import com.fei.wx.dto.UserInfo;
+import com.fei.wx.util.BussinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -14,13 +15,12 @@ public class UserInfoService {
     private SysUserMapper sysUserMapper;
 
 
-    public UserInfo getInfo(Integer userId) {
+    public SysUser getInfo(Integer userId) throws BussinessException {
         SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
-        Assert.state(sysUser == null, "用户不存在");
-        UserInfo userInfo = new UserInfo();
-        userInfo.setNickName(sysUser.getNickname());
-        userInfo.setAvatarUrl(sysUser.getAvatar());
-        return userInfo;
+        if (sysUser == null) {
+           throw new BussinessException("用户不存在");
+        }
+        return sysUser;
     }
 
     public SysUser getUserByWeixinOpenid(String openid) {

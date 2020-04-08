@@ -4,6 +4,7 @@ import com.fei.db.dao.SysUserMapper;
 import com.fei.db.entity.po.SysUser;
 import com.fei.wx.dto.UserInfo;
 import com.fei.wx.service.UserInfoService;
+import com.fei.wx.util.BussinessException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.fei.common.util.ResponseUtil;
@@ -43,7 +44,13 @@ public class WxUserController {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
-        UserInfo info = userInfoService.getInfo(userId);
+        SysUser info = null;
+        try {
+            info = userInfoService.getInfo(userId);
+        } catch (BussinessException e) {
+            e.printStackTrace();
+            return ResponseUtil.fail(e.getMessage());
+        }
         return ResponseUtil.ok(info);
     }
 

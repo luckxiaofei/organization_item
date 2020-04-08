@@ -1,11 +1,24 @@
 <view wx:for="{{subjectList}}" wx:key="*this">
-  <van-card title="{{item.name}}" desc="{{item.addTime}}" thumb-link="{{item.detailUrl}}" thumb="https://wx.qlogo.cn/mmopen/vi_32/65vd1qS31BfMdJ82kcx1bWJOCaxibH5DWvib7QJpw8jzfY9kLUyJjN6h4icAUFcGDKEBXhBcnEyVL6GbcJB0Gs0YQ/132">
-    <view slot="footer">
-      <van-button round color="#FFD700" size="mini" data-type="{{item.type}}" bind:click="goCreateGroup">再来一次</van-button>
-      <van-button round size="mini" type="danger" data-id="{{item.id}}" bind:click="deleteSubject">
-        删除
-      </van-button>
-      <van-dialog id="van-dialog" />
-    </view>
-  </van-card>
+
+    <van-card wx:if="{{item.type==0}}" title="{{item.name}}" desc="{{item.addTime}}" thumb-link="{{item.detailUrl}}"
+              thumb="http://chuantu.xyz/t6/727/1586367275x977013264.jpg">
+        <view slot="footer">
+            <van-button round color="#FFD700" size="mini" data-type="{{item.type}}" bind:click="goCreateGroup">再来一次</van-button>
+            <van-button round size="mini" type="danger" data-id="{{item.id}}" bind:click="deleteSubject">
+                删除
+            </van-button>
+            <van-dialog id="van-dialog"/>
+        </view>
+    </van-card>
+
+    <van-card wx:if="{{item.type==1}}" title="{{item.name}}" desc="{{item.addTime}}" thumb-link="{{item.detailUrl}}"
+              thumb="http://chuantu.xyz/t6/727/1586367221x977013264.png">
+        <view slot="footer">
+            <van-button round color="#FFD700" size="mini" data-type="{{item.type}}" bind:click="goCreateGroup">再来一次</van-button>
+            <van-button round size="mini" type="danger" data-id="{{item.id}}" bind:click="deleteSubject">
+                删除
+            </van-button>
+            <van-dialog id="van-dialog"/>
+        </view>
+    </van-card>
 </view>

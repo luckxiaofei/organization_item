@@ -1,7 +1,15 @@
 <view wx:for="{{subjectList}}" wx:key="*this">
-    <van-card
+
+    <van-card wx:if="{{item.type==0}}"
             title="{{item.name}}" desc="{{item.addTime}}"
-            thumb="https://wx.qlogo.cn/mmopen/vi_32/65vd1qS31BfMdJ82kcx1bWJOCaxibH5DWvib7QJpw8jzfY9kLUyJjN6h4icAUFcGDKEBXhBcnEyVL6GbcJB0Gs0YQ/132"
+            thumb="http://chuantu.xyz/t6/727/1586367275x977013264.jpg"
+            thumb-link="{{item.detailUrl}}"
+    >
+    </van-card>
+
+    <van-card wx:if="{{item.type==1}}"
+            title="{{item.name}}" desc="{{item.addTime}}"
+            thumb="http://chuantu.xyz/t6/727/1586367221x977013264.png"
             thumb-link="{{item.detailUrl}}"
     >
     </van-card>
