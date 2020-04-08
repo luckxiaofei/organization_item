@@ -2,6 +2,7 @@ package com.fei.wx.web;
 
 import com.fei.common.util.ResponseUtil;
 import com.fei.db.entity.po.SujectInfo;
+import com.fei.db.entity.vo.SubjectInfoVO;
 import com.fei.wx.annotation.LoginUser;
 import com.fei.wx.service.SubjectService;
 import com.fei.wx.util.BussinessException;
@@ -106,7 +107,7 @@ public class WxSujectController {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
-        List<SujectInfo> myCreateSubject = subjectService.getMyCreateSubject(userId);
+        List<SubjectInfoVO> myCreateSubject = subjectService.getMyCreateSubject(userId);
         return ResponseUtil.ok(myCreateSubject);
     }
 
@@ -115,8 +116,13 @@ public class WxSujectController {
         if (userId == null) {
             return ResponseUtil.unlogin();
         }
-        List<SujectInfo> myJoinSubject = subjectService.getMyJoinSubject(userId);
+        List<SubjectInfoVO> myJoinSubject = subjectService.getMyJoinSubject(userId);
         return ResponseUtil.ok(myJoinSubject);
     }
 
+    @GetMapping("deleteSubject")
+    public Object deleteSubject(Integer subjectId) {
+        int res = subjectService.deleteSubject(subjectId);
+        return ResponseUtil.ok(res);
+    }
 }

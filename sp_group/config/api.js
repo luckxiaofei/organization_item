@@ -24,6 +24,7 @@ module.exports = {
     getMyJoinSubject: WxApiRoot + 'getMyJoinSubject',
 
     getUserInfo: WxApiRoot + '/user/getUserInfo',
-    updateUserInfo: WxApiRoot + '/user/updateUserInfo'
+    updateUserInfo: WxApiRoot + '/user/updateUserInfo',
+    deleteSubject: WxApiRoot + '/deleteSubject'
 
 };

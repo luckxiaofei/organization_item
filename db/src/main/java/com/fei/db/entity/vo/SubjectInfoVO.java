@@ -25,4 +25,6 @@ public class SubjectInfoVO extends SujectInfo {
 
     private Boolean realName;//实名
 
+    private String detailUrl;
+
 }

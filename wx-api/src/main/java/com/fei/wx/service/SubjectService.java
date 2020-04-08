@@ -21,6 +21,7 @@ import com.qcloud.cos.utils.DateUtils;
 import jodd.util.StringUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -284,14 +285,25 @@ public class SubjectService {
     }
 
 
-    public List<SujectInfo> getMyCreateSubject(Integer userId) {
+    public List<SubjectInfoVO> getMyCreateSubject(Integer userId) {
         Example example = new Example(SujectInfo.class);
-        example.createCriteria().andEqualTo("addUserId", userId);
+        example.createCriteria().andEqualTo("addUserId", userId).andEqualTo("deleted",false);
         List<SujectInfo> sujectInfoList = sujectInfoMapper.selectByExample(example);
-        return sujectInfoList;
+
+        List<SubjectInfoVO> subjectInfoVOList = sujectInfoList.stream().map(p -> {
+            SubjectInfoVO subjectInfoVO = new SubjectInfoVO();
+            BeanUtils.copyProperties(p, subjectInfoVO);
+            if (p.getType().equals(0l)) {
+                subjectInfoVO.setDetailUrl("/pages/group/group?subjectId="+p.getId());
+            } else {
+                subjectInfoVO.setDetailUrl("/pages/sort/sort_detail?subjectId="+p.getId());
+            }
+            return subjectInfoVO;
+        }).collect(Collectors.toList());
+        return subjectInfoVOList;
     }
 
-    public List<SujectInfo> getMyJoinSubject(Integer userId) {
+    public List<SubjectInfoVO> getMyJoinSubject(Integer userId) {
         ArrayList<Integer> subjectIdList = Lists.newArrayList();
 
         Example exampleGroupDetail = new Example(GroupDetail.class);
@@ -307,9 +319,21 @@ public class SubjectService {
         subjectIdList.addAll(sortSubIdList);
 
         Example example = new Example(SujectInfo.class);
-        example.createCriteria().andIn("id", subjectIdList);
+        example.createCriteria().andIn("id", subjectIdList).andEqualTo("deleted",false);
         List<SujectInfo> sujectInfoList = sujectInfoMapper.selectByExample(example);
-        return sujectInfoList;
+
+        List<SubjectInfoVO> subjectInfoVOList = sujectInfoList.stream().map(p -> {
+            SubjectInfoVO subjectInfoVO = new SubjectInfoVO();
+            BeanUtils.copyProperties(p, subjectInfoVO);
+            if (p.getType().equals(0l)) {
+                subjectInfoVO.setDetailUrl("/pages/group/group?subjectId="+p.getId());
+            } else {
+                subjectInfoVO.setDetailUrl("/pages/sort/sort_detail?subjectId="+p.getId());
+            }
+            return subjectInfoVO;
+        }).collect(Collectors.toList());
+
+        return subjectInfoVOList;
     }
 
     public String sortExprot(Integer subjectId) {
@@ -343,6 +367,13 @@ public class SubjectService {
                     .append("第").append(sortDetail.getSort()).append("名】").append("\n");
         }
         return builder.toString();
+    }
+
+    public int deleteSubject(Integer subjectId) {
+        SujectInfo sujectInfo = new SujectInfo();
+        sujectInfo.setId(subjectId);
+        sujectInfo.setDeleted(true);
+        return sujectInfoMapper.updateByPrimaryKeySelective(sujectInfo);
     }
 
 }

@@ -1,2 +1,8 @@
-<!--pages/myJoin/myJoin.wxml-->
-<text>pages/myJoin/myJoin.wxml</text>
+<view wx:for="{{subjectList}}" wx:key="*this">
+    <van-card
+            title="{{item.name}}" desc="{{item.addTime}}"
+            thumb="https://wx.qlogo.cn/mmopen/vi_32/65vd1qS31BfMdJ82kcx1bWJOCaxibH5DWvib7QJpw8jzfY9kLUyJjN6h4icAUFcGDKEBXhBcnEyVL6GbcJB0Gs0YQ/132"
+            thumb-link="{{item.detailUrl}}"
+    >
+    </van-card>
+</view>

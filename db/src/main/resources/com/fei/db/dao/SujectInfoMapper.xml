@@ -71,7 +71,7 @@
         from suject_info si
                  left join group_detail gd on si.id = gd.suject_info_id
                  left join sort_detail sd on si.id = sd.suject_info_id
-                 where si.id=#{sujectId}
+                 where si.id=#{sujectId} and si.deleted=false
     </select>
 
 

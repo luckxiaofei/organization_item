@@ -69,9 +69,9 @@ Page({
 
         let that = this;
         util.request(api.addSortSubject, {
-            name: this.data.subject,
-            peopleSum: this.data.peopleNumber,
-            needName: this.data.needName
+            name: that.data.subject,
+            peopleSum: that.data.peopleNumber,
+            needName: that.data.needName
         }).then(function (res) {
             util.navigateTo("/pages/sort/sort_detail?subjectId=" + res.data)
         });
