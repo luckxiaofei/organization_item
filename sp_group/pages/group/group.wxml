@@ -18,12 +18,12 @@
     <view>
         <van-cell title="参与人数">
             <view>
-                <van-stepper value="{{ 1 }}" max="99" bind:change="usePnumInput"/>
+                <van-stepper value="{{ 1 }}" max="999" bind:change="usePnumInput"/>
             </view>
         </van-cell>
         <van-cell title="分组数">
             <view>
-                <van-stepper value="{{ 1 }}" max="99" bind:change="useGnumInput"/>
+                <van-stepper value="{{ 1 }}" max="999" bind:change="useGnumInput"/>
             </view>
         </van-cell>
         <van-cell title="参与人需填写姓名">

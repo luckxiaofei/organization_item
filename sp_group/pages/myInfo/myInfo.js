@@ -64,6 +64,14 @@ Page({
   },
   updateUserInfo() {
     let that = this;
+    if (that.data.userName == null || that.data.userName == '') {
+      util.showErrorToast('请填写姓名');
+      return;
+    }
+    if (that.data.birthday == null || that.data.birthday == '') {
+      util.showErrorToast('请填写生日');
+      return;
+    }
     util.request(api.updateUserInfo, {
       userName: that.data.userName,
       birthday: that.data.birthday,

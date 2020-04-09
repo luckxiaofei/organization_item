@@ -249,9 +249,9 @@ public class SubjectService {
                 wxMaSubscribeMessage.setToUser(sysUser.getWeixinOpenid());
                 wxMaSubscribeMessage.setTemplateId("xB8PAlZ9Qc1-USZFaKV2tKBM9ak6tTe4GISXvwSuFJc");
                 if (infoVO.getType().equals(0l)) {
-                    wxMaSubscribeMessage.setPage("/pages/group/group?subjectId=" + infoVO.getId());
-                } else {
                     wxMaSubscribeMessage.setPage("/pages/sort/sort_detail?subjectId=" + infoVO.getId());
+                } else {
+                    wxMaSubscribeMessage.setPage("/pages/group/group_detail?subjectId=" + infoVO.getId());
                 }
                 ArrayList<WxMaSubscribeMessage.Data> dataArrayList = Lists.newArrayList();
                 dataArrayList.add(new WxMaSubscribeMessage.Data("thing1", infoVO.getName()));
@@ -336,9 +336,9 @@ public class SubjectService {
             SubjectInfoVO subjectInfoVO = new SubjectInfoVO();
             BeanUtils.copyProperties(p, subjectInfoVO);
             if (p.getType().equals(0l)) {
-                subjectInfoVO.setDetailUrl("/pages/group/group?subjectId=" + p.getId());
-            } else {
                 subjectInfoVO.setDetailUrl("/pages/sort/sort_detail?subjectId=" + p.getId());
+            } else {
+                subjectInfoVO.setDetailUrl("/pages/group/group_detail?subjectId=" + p.getId());
             }
             return subjectInfoVO;
         }).sorted(new Comparator<SubjectInfoVO>() {
@@ -379,9 +379,9 @@ public class SubjectService {
             SubjectInfoVO subjectInfoVO = new SubjectInfoVO();
             BeanUtils.copyProperties(p, subjectInfoVO);
             if (p.getType().equals(0l)) {
-                subjectInfoVO.setDetailUrl("/pages/group/group?subjectId=" + p.getId());
-            } else {
                 subjectInfoVO.setDetailUrl("/pages/sort/sort_detail?subjectId=" + p.getId());
+            } else {
+                subjectInfoVO.setDetailUrl("/pages/group/group_detail?subjectId=" + p.getId());
             }
             return subjectInfoVO;
         }).sorted(new Comparator<SubjectInfoVO>() {

@@ -1,39 +1,40 @@
 <shareView id="shareView"></shareView>
 <view>
-    <view class="detail_type">
-        <view style="display:flex;">
-            <image src="{{userInfo.avatarUrl}}" class="round_icon"></image>
-            <text class="ts_type" wx:if="{{!isJoin}}">{{userInfo.nickName}},你还未参与分组</text>
-            <text class="ts_type" wx:if="{{isJoin}}">哇塞，你抽到了第{{sortNumber}}名</text>
-        </view>
-        <view class="zt_type">
-            <text>{{subjectName}}</text>
-        </view>
-        <view class="jd_type">
-            <text>{{joinSum}}/{{peopleSum}}张卡片已被抽取</text>
-        </view>
-        <view class="nn_type" wx:if="{{!isJoin}}">
-            <button class="btn_type" bindtap="join">参与排序</button>
-        </view>
+  <view class="detail_type">
+    <view style="display:flex;">
+      <image src="{{userInfo.avatarUrl}}" class="round_icon"></image>
+      <text class="ts_type" wx:if="{{!isJoin}}">{{userInfo.nickName}},你还未参与分组</text>
+      <text class="ts_type" wx:if="{{isJoin}}">哇塞，你抽到了第{{sortNumber}}名</text>
     </view>
-    <scroll-view scroll-y style="height:300px;margin-left:10px;position:fixed; ">
-        <view wx:for="{{sortList}}" wx:key="*this" wx:for-item="item">
-            <van-cell title="{{item.userName}}" value="第{{item.sort}}名" label="{{item.addTime}}">
-                <view slot="icon">
-                    <image src="{{userInfo.avatarUrl}}" class="round_icon2"></image>
-                </view>
-
-            </van-cell>
+    <view class="zt_type">
+      <text>{{subjectName}}</text>
+    </view>
+    <view class="jd_type">
+      <text>{{joinSum}}/{{peopleSum}}张卡片已被抽取</text>
+    </view>
+    <view class="nn_type" wx:if="{{!isJoin}}">
+      <button class="btn_type" bindtap="join">参与排序</button>
+      <van-dialog id="van-dialog" />
+    </view>
+  </view>
+  <scroll-view scroll-y style="height:300px;margin-left:10px;position:fixed; ">
+    <view wx:for="{{sortList}}" wx:key="*this" wx:for-item="item">
+      <van-cell title="{{item.userName}}" value="第{{item.sort}}名" label="{{item.addTime}}">
+        <view slot="icon">
+          <image src="{{userInfo.avatarUrl}}" class="round_icon2"></image>
         </view>
-        <view wx:if="{{joinSum==0}}" class="noJoin">
-            暂无人抽取
-        </view>
-    </scroll-view>
 
-    <van-goods-action>
-        <van-goods-action-icon icon="wap-home-o" text="首页" bind:click="goHome"/>
-        <van-goods-action-icon icon="records" text="导出" bind:click="exportSort"/>
-        <van-goods-action-icon icon="add-o" text="创建" bind:click="goCreateSortSubject"/>
-        <van-goods-action-button color="#FFD700" text="分享排序" open-type='share'/>
-    </van-goods-action>
+      </van-cell>
+    </view>
+    <view wx:if="{{joinSum==0}}" class="noJoin">
+      暂无人抽取
+    </view>
+  </scroll-view>
+
+  <van-goods-action>
+    <van-goods-action-icon icon="wap-home-o" text="首页" bind:click="goHome" />
+    <van-goods-action-icon icon="records" text="导出" bind:click="exportSort" />
+    <van-goods-action-icon icon="add-o" text="创建" bind:click="goCreateSortSubject" />
+    <van-goods-action-button color="#FFD700" text="分享排序" open-type='share' />
+  </van-goods-action>
 </view>

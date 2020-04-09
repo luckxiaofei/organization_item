@@ -42,6 +42,6 @@
         <van-goods-action-icon icon="wap-home-o" text="首页" bind:click="goHome"/>
         <van-goods-action-icon icon="records" text="导出" bind:click="exportGroup"/>
         <van-goods-action-icon icon="add-o" text="创建" bind:click="goCreateGroupSubject"/>
-        <van-goods-action-button color="#FFD700" text="分享排序" open-type='share'/>
+        <van-goods-action-button color="#FFD700" text="分享分组" open-type='share'/>
     </van-goods-action>
 </view>
